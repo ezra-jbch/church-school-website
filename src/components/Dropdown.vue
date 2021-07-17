@@ -19,21 +19,26 @@ export default {
 </script>
 
 <style>
+/*Moves the dropdown to the left of the screen, under the logo*/
 .pos{
     text-align: left;
     margin-left: 2%;
     margin-top: 2%;
 }
+/*Design for the arrow by the dropdown*/
 .arrow {
   border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;
 }
+/*Put the arrow downwards*/
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
+/*Button*/
 .dropbtn {
   background-color: white;
   padding: 16px;
@@ -41,12 +46,12 @@ export default {
   border: none;
   cursor: pointer;
 }
-
+/*Dropdown*/
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
+/*Content that is dropping down*/
 .dropdown-content {
   display: none;
   position: absolute;
@@ -63,14 +68,24 @@ export default {
   text-decoration: none;
   display: block;
 }
-
-.dropdown-content a:hover {background-color: #f1f1f1;}
+/*Change styles on dropdown when you hover over it*/
+.dropdown-content a:hover {
+  background-color: #A7C7E7;
+  color: white;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
 .dropdown:hover .dropbtn {
   background-color: #A7C7E7;
+  color: white;
+}
+/*Make arrow white when you hover over it*/
+.dropdown:hover .arrow {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
 }
 </style>
