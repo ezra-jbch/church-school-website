@@ -77,9 +77,12 @@ export default {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 .dropdown:hover .dropbtn {
   background-color: #A7C7E7;
   color: white;
+  /*Rounded edges*/
+  border-radius: 50px;
 }
 /*Make arrow white when you hover over it*/
 .dropdown:hover .arrow {
