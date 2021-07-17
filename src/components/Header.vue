@@ -1,6 +1,6 @@
 <template>
     <header class = "header">
-        <router-link class="footer-text" :to="{ name: 'Home' }"> <!-- Routes the page back to the Home page when you press on the Logo -->
+        <router-link :to="{ name: 'Home' }"> <!-- Routes the page back to the Home page when you press on the Logo -->
             <img alt ="church school logo" src = "../assets/logo.png" class = "img">
         </router-link>
     </header>
@@ -25,5 +25,14 @@ export default {
         -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
         transform: translateZ(0);
 
+    }
+    @media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+        .header{
+            text-align: center;
+        }
+        .img{
+            width: 80%;
+        }
     }
 </style>
