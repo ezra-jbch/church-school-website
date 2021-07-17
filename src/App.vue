@@ -17,6 +17,11 @@ export default{
 }
 </script>
 <style>
+html,body{
+  /*Fixed Margins of HTML Page*/
+  margin:0;
+  padding:0;  
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
