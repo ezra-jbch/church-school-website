@@ -1,9 +1,6 @@
 <template>
   <Header />
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <Dropdown/>
   <router-view/>
   <Footer />
 </template>
@@ -12,8 +9,9 @@
 
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Dropdown from './components/Dropdown.vue'
 export default{
-  components: { Header, Footer}
+  components: { Header, Footer, Dropdown}
 }
 </script>
 <style>
