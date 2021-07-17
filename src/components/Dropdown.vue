@@ -1,10 +1,12 @@
 <template>
-  <div class="dropdown">
-      <span>Lessons</span>
-      <div class="dropdown-content">
-          <p>Hello world</p>
-      </div>
-  </div>
+    <div class="pos">
+        <div class="dropdown">
+            <span>Lessons</span>
+            <div class="dropdown-content">
+                <p>Kindergarten</p>
+            </div>
+        </div>
+    </div> 
 </template>
 
 <script>
@@ -14,6 +16,11 @@ export default {
 </script>
 
 <style>
+.pos{
+    text-align: left;
+    margin-top: 2%;
+    margin-left: 2%;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -28,7 +35,11 @@ export default {
   padding: 12px 16px;
   z-index: 1;
 }
-
+/* Change color of dropdown links on hover */
+.dropdown-content:hover {
+    background-color: #DCDCDC;
+}
+/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
