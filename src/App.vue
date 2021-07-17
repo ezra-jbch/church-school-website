@@ -5,15 +5,17 @@
     <router-link to="/about">About</router-link>
   </div>
   <router-view/>
+  <Footer />
 </template>
 
 <script>
+
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 export default{
-  components: { Header }
+  components: { Header, Footer}
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
