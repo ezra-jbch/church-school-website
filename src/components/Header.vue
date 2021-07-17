@@ -1,6 +1,6 @@
 <template>
     <header class = "header">
-        <router-link class="footer-text" :to="{ name: 'Home' }"> <!-- Routes the page back to the Home page when you press on the Logo -->
+        <router-link :to="{ name: 'Home' }"> <!-- Routes the page back to the Home page when you press on the Logo -->
             <img alt ="church school logo" src = "../assets/logo.png" class = "img">
         </router-link>
     </header>
