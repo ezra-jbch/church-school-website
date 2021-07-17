@@ -3,9 +3,9 @@
         <div class="dropdown">
         <button class="dropbtn">Lessons</button>
             <div class="dropdown-content" style="left:0;">
-                <router-link :to="{ name: 'About' }">Kindergarten</router-link> 
-                <router-link :to="{ name: 'About' }">Elementary</router-link> 
-                <router-link :to="{ name: 'About' }">Youth Group</router-link> 
+                <router-link :to="{ name: 'Kindergarten' }">Kindergarten</router-link> 
+                <router-link :to="{ name: 'Elementary' }">Elementary</router-link> 
+                <router-link :to="{ name: 'YouthGroup' }">Youth Group</router-link> 
             </div>
         </div>
     </div>
