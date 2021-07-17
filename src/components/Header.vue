@@ -26,4 +26,13 @@ export default {
         transform: translateZ(0);
 
     }
+    @media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+        .header{
+            text-align: center;
+        }
+        .img{
+            width: 80%;
+        }
+    }
 </style>
