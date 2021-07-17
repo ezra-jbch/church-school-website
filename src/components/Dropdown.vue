@@ -1,7 +1,7 @@
 <template>
     <div class="pos">
         <div class="dropdown">
-        <button class="dropbtn">Lessons</button>
+        <button class="dropbtn">Lessons <i class="arrow down"></i></button>
             <div class="dropdown-content" style="left:0;">
                 <router-link :to="{ name: 'Kindergarten' }">Kindergarten</router-link> 
                 <router-link :to="{ name: 'Elementary' }">Elementary</router-link> 
@@ -23,6 +23,16 @@ export default {
     text-align: left;
     margin-left: 2%;
     margin-top: 2%;
+}
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 .dropbtn {
   background-color: white;
