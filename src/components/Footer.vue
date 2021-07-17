@@ -1,7 +1,7 @@
 <template>
-  <div class="footer">
-
-  </div>
+     <div class="footer">
+        <router-link class="footer-text" :to="{ name: 'ContactUs' }">Contact Us</router-link>
+     </div>
 </template>
 
 <style>
@@ -11,7 +11,14 @@
         bottom: 0;
         width: 100%;
         height: 100px;
-        background: #666666;
+        background: #333333;
         padding: 15px 15px 10px;
+
+    }
+    .footer-text {
+        color: #808080;
+        text-decoration: none;
+        font-size: 15px;
+        font-family: "Open Sans", sans-serif;
     }
 </style>
