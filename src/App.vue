@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <Dropdown/>
+  <Dropdown :pages="pageArray"/>
   <router-view/>
   <Footer />
 </template>
@@ -11,7 +11,16 @@ import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Dropdown from './components/Dropdown.vue'
 export default{
-  components: { Header, Footer, Dropdown}
+  components: { Header, Footer, Dropdown},
+  data() {
+    return{
+      pageArray: [
+        {page: 'Kindergarten', route: "Kindergarten"},
+        {page: 'Elementary' , route: "Elementary"},
+        {page: 'Youth Group', route: "Youth-Group"},
+        ]
+    }
+  }
 }
 </script>
 <style>

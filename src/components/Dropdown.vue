@@ -1,13 +1,12 @@
 <template>
-    <!--You should not be hardcoding it like this if you want to be able to re-use this component later.
-    Freshen up on props!-->
     <div class="pos">
         <div class="dropdown">
         <button class="dropbtn">Lessons<i class="arrow down"></i></button>
             <div class="dropdown-content" style="left:0;">
-                <router-link :to="{ name: 'Kindergarten' }">Kindergarten</router-link> 
-                <router-link :to="{ name: 'Elementary' }">Elementary</router-link> 
-                <router-link :to="{ name: 'YouthGroup' }">Youth Group</router-link> 
+              <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
+              <div v-for="page in pages" :key="page">
+                <router-link :to="page.route">{{ page.page }}</router-link> 
+              </div>
             </div>
         </div>
     </div>
@@ -15,7 +14,7 @@
 
 <script>
 export default {
-
+  props:['pages']
 }
 </script>
 
