@@ -18,7 +18,6 @@ export default {
 }
 </script>
 
-
 <style>
     .footer {
         /* making footer flush to the bottom */
@@ -44,6 +43,15 @@ export default {
         border-radius: 10px;
         border-width: 2px;
         padding: 5px 10px;
+    }
+    .border:hover {
+        background: #505050;
+    }
+    .border:focus {
+        /* button clicked (may end up removing this) */
+        background: #808080;
+        color: #333333;
+        border-color: #808080;
     }
     .left {
         /* spacing left apart from right */
