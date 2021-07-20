@@ -1,4 +1,5 @@
 // Vue
+import 'bootstrap/dist/css/bootstrap.css';
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -24,3 +25,4 @@ app.component("DataTable", DataTable)
 
 // mount app in index.html
 app.mount('#app')
+import 'bootstrap/dist/js/bootstrap.js';
