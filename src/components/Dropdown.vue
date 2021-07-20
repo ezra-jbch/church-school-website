@@ -14,7 +14,19 @@
 
 <script>
 export default {
-  props:['pages']
+  props:['pages'],
+  /*
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+    handleHover(){
+
+    }
+  }
+  */
 }
 </script>
 
@@ -22,8 +34,7 @@ export default {
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos{
     text-align: left; 
-    margin-left: 2%; 
-    margin-top: 2%; 
+    margin-left: 1%; 
 }
 /*Design for the arrow by the dropdown*/
 .arrow {
@@ -51,6 +62,7 @@ export default {
 }
 /*Dropdown*/
 .dropdown {
+  border: 15px solid transparent; /*Added invisible border around this div so that you can add margins to button and dropdown without hovering issues*/
   position: relative;
   display: inline-block;
 }
@@ -63,6 +75,7 @@ export default {
   min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  margin-top: 15px; /*Adds space between the button and what is dropping down*/
   animation: fade 0.5s; /*Look at keyframes fade animation*/
 }
 /*Animation for .dropdown-content. Makes dropdown seem more seemless when it drops down*/
@@ -76,6 +89,7 @@ export default {
     transform: translateY(0%);
   }
 }
+/*This is the text that you see in the dropdown*/
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -92,11 +106,13 @@ export default {
   transition: padding 0.5s;
 }
 
+/*white box that dropdowns*/
 .dropdown:hover .dropdown-content {
   display: block;
   transform: translateY(0%);
 }
 
+/*Button style during hover*/
 .dropdown:hover .dropbtn {
   background-color: #A7C7E7;
   color: white;
