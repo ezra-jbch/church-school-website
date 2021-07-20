@@ -34,7 +34,8 @@ export default {
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos{
     text-align: left; 
-    margin-left: 1%; 
+    margin-left: 1%;
+    margin-top: 1%; 
 }
 /*Design for the arrow by the dropdown*/
 .arrow {
@@ -62,7 +63,7 @@ export default {
 }
 /*Dropdown*/
 .dropdown {
-  border: 15px solid transparent; /*Added invisible border around this div so that you can add margins to button and dropdown without hovering issues*/
+  border-bottom: 15px solid transparent; /*Added invisible border around this div so that you can add margins to button and dropdown without hovering issues*/
   position: relative;
   display: inline-block;
 }
