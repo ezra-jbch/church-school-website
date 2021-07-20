@@ -2,7 +2,7 @@
   <Header />
   <Dropdown :pages="pageArray"/>
 
-  <router-view v-slot="{Component}">
+  <router-view v-slot="{Component}"> <!--This is how you do transitions between routes-->
     <transition name ="route" mode="out-in">
       <component :is=Component></component>
     </transition>  
@@ -39,6 +39,7 @@ html,body{
   /*Fixed Margins of HTML Page*/
   margin:0;
   padding:0;
+  overflow-x: clip; /*Need this to prevent overflow. Did not use 'overflow-x: hidden' because it breaks dropdown*/
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
