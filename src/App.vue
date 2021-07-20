@@ -31,6 +31,7 @@ export default{
 </script>
 <style>
 /*Logo hex values:
+
 Dark blue: #005595
 Lighter blue: #36b4e5
 */ 
