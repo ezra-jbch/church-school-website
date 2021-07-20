@@ -3,27 +3,27 @@
         <div class="dropdown">
         <button class="dropbtn">Lessons<i class="arrow down"></i></button>
             <div class="dropdown-content" style="left:0;">
-                <router-link :to="{ name: 'Kindergarten' }">Kindergarten</router-link> 
-                <router-link :to="{ name: 'Elementary' }">Elementary</router-link> 
-                <router-link :to="{ name: 'YouthGroup' }">Youth Group</router-link> 
+              <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
+              <div v-for="page in pages" :key="page">
+                <router-link :to="page.route">{{ page.page }}</router-link> 
+              </div>
             </div>
         </div>
     </div>
-    
 </template>
 
 <script>
 export default {
-
+  props:['pages']
 }
 </script>
 
 <style>
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos{
-    text-align: left;
-    margin-left: 2%;
-    margin-top: 2%;
+    text-align: left; 
+    margin-left: 2%; 
+    margin-top: 2%; 
 }
 /*Design for the arrow by the dropdown*/
 .arrow {
@@ -63,8 +63,9 @@ export default {
   min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  animation: fade 0.5s;
+  animation: fade 0.5s; /*Look at keyframes fade animation*/
 }
+/*Animation for .dropdown-content. Makes dropdown seem more seemless when it drops down*/
 @keyframes fade {
   from {
     opacity: 0;
