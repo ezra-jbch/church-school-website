@@ -14,23 +14,14 @@
 
 <script>
 export default {
-  props:['pages'],
-  /*
-  data(){
-    return{
-
-    }
-  },
-  methods:{
-    handleHover(){
-
-    }
-  }
-  */
+  props:['pages']
 }
 </script>
 
 <style>
+/*
+YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better 
+*/
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos{
     text-align: left; 

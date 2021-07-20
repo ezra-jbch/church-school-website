@@ -14,16 +14,16 @@ export default {
 <style>
     .header{
         padding: 10px;
-        background: #E4E5E8;
+        background: #f8f8f8;
         text-align: left;
     }
     .img{
         width: 30%;
+        margin-left: 1.5%;
         /*Re-renders image so that it is easier to code*/
         -ms-transform: translateZ(0); /* IE 9 */
         -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
         transform: translateZ(0);
-
     }
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
