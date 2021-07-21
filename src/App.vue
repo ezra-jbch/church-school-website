@@ -24,6 +24,10 @@ export default{
 }
 </script>
 <style>
+/*Logo hex values:
+Dark blue: #005595
+Lighter blue: #36b4e5
+*/ 
 html,body{
   /*Fixed Margins of HTML Page*/
   margin:0;
