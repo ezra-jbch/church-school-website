@@ -4,8 +4,8 @@
       <!-- Routes the page back to the Home page when you press on the Logo -->
       <img alt="church school logo" src="../assets/logo.png" class="img" />
     </router-link>
-    <div class ="button-pos">
-      <button class="btn btn-outline-secondary">
+    <div class="button-pos">
+      <button class="btn btn-outline-secondary" id="login">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -23,7 +23,7 @@
             d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
           />
         </svg>
-        Login
+        &nbsp; Login
       </button>
     </div>
   </header>
@@ -34,8 +34,12 @@ export default {};
 </script>
 
 <style>
-.button-pos{
-    margin-right: 2%;
+#login {
+  display: flex;
+  align-items: center;
+}
+.button-pos {
+  margin-right: 2%;
 }
 #router-link {
   display: inline-block;
@@ -56,13 +60,13 @@ export default {};
   -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
   transform: translateZ(0);
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
   /* For mobile phones: */
-  .header {
-    text-align: center;
+  #router-link {
+    width: 70%;
   }
-  .img {
-    width: 80%;
+  #login {
+    font-size: 0;
   }
 }
 </style>
