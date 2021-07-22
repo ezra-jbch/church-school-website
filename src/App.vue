@@ -66,13 +66,13 @@ html,body{
   transform: translateX(100px);
 }
 .route-enter-active{
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
 }
 .route-leave-to{
   opacity: 0;
   transform: translateX(-100px);
 }
 .route-leave-active{
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
 }
 </style>
