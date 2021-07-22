@@ -1,7 +1,6 @@
 <template>
   <Header />
   <Dropdown :pages="pageArray"/>
-
   <router-view v-slot="{Component}"> <!--This is how you do transitions between routes-->
     <transition name ="route" mode="out-in">
       <component :is=Component></component>
