@@ -1,7 +1,22 @@
 <template>
   <div class="pos">
     <div class="dropdown">
-      <button class="dropbtn">Lessons<i class="arrow down"></i></button>
+      <button class="dropbtn">
+        Lessons
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </button>
       <div class="dropdown-content" style="left: 0">
         <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
         <div v-for="page in pages" :key="page">
@@ -19,24 +34,14 @@ export default {
 </script>
 
 <style>
-/*
-YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better 
-*/
+
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos {
   text-align: left;
   margin-left: 1%;
   margin-top: 1%;
 }
-/*Design for the arrow by the dropdown*/
-.arrow {
-  border: solid black;
-  border-width: 0 1.5px 1.5px 0;
-  display: inline-block;
-  padding: 3px;
-  margin-left: 10px;
-  margin-bottom: 2.5px;
-}
+
 /*Put the arrow downwards*/
 .down {
   transform: rotate(45deg);
@@ -101,12 +106,5 @@ YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better
   /*Rounded edges*/
   border-radius: 50px;
   transition: background-color 0.5s ease-out;
-}
-/*Make arrow white when you hover over it*/
-.dropdown:hover .arrow {
-  border: solid white;
-  border-width: 0 1.5px 1.5px 0;
-  display: inline-block;
-  padding: 3px;
 }
 </style>
