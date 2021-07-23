@@ -33,13 +33,11 @@
 export default {
   data(){
     return{
-      showLogin: false,
     }
   },
   methods: {
     isVisible(){
-      this.showLogin = true;
-      this.$emit("seeLogin", this.showLogin);
+      this.$emit("seeLogin");
     }
   }
 };

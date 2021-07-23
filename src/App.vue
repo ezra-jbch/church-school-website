@@ -1,7 +1,7 @@
 <template>
-  <Header @seeLogin="isVisible"/> 
+  <Header @seeLogin="isVisible" />
   <div v-if="showLogin">
-    <Login/>
+    <Login @notLogin="notVisible" />
   </div>
   <Dropdown :pages="pageArray" />
   <router-view v-slot="{ Component }">
@@ -20,7 +20,7 @@ import Dropdown from "./components/Dropdown.vue";
 import Login from "./components/Login.vue";
 
 export default {
-  components: { Header, Footer, Dropdown, Login},
+  components: { Header, Footer, Dropdown, Login },
   data() {
     return {
       pageArray: [
@@ -28,15 +28,19 @@ export default {
         { page: "Elementary", route: "Elementary" },
         { page: "Youth Group", route: "Youth-Group" },
       ],
-      showLogin: false
+      showLogin: false,
     };
   },
-  methods:{
-    isVisible(){
+  methods: {
+    isVisible() {
       this.showLogin = true;
-      console.log( this.showLogin);
-    }
-  }
+      console.log(this.showLogin);
+    },
+    notVisible() {
+      this.showLogin = false;
+      console.log(this.showLogin);
+    },
+  },
 };
 </script>
 <style>

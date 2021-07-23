@@ -41,12 +41,6 @@ export default {
   margin-left: 1%;
   margin-top: 1%;
 }
-
-/*Put the arrow downwards*/
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-}
 /*Button*/
 .dropbtn {
   background-color: white;
