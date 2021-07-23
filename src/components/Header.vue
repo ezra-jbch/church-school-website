@@ -2,7 +2,7 @@
   <header class="header">
     <router-link :to="{ name: 'Home' }" id="router-link">
       <!-- Routes the page back to the Home page when you press on the Logo -->
-      <img alt="church school logo" src="../assets/logo.png" class="img" />
+      <img alt="church school logo" src="../assets/logo.png" class="imgLogo" />
     </router-link>
     <div class="button-pos">
       <button class="btn btn-outline-secondary" id="login" @click ="isVisible">
@@ -65,7 +65,7 @@ export default {
   background-color: #f8f8f8;
   padding: 10px;
 }
-.img {
+.imgLogo {
   width: 100%;
   /*Re-renders image so that it is easier to code*/
   -ms-transform: translateZ(0); /* IE 9 */

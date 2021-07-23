@@ -37,12 +37,14 @@ export default {
 <style scoped>
 #item-right {
   flex: 0 1 auto;
-  margin-top: 3%;
+  margin-top: 2.5%;
   margin-right: 3%;
   margin-left: auto;
+  transform: scale(1.2);
 }
 #item-right:hover{
     cursor: pointer;
+    fill: #005595;
 }
 .item-center {
   flex: 0 1 auto;
@@ -52,9 +54,9 @@ export default {
   transform: translateX(-50%);
 }
 .modalBox {
-  width: 400px;
-  height: 400px;
-  margin: 300px auto;
+  width: 30%;
+  height: 50%;
+  margin: 100px auto;
   background: white;
   border-radius: 20px;
   display: flex;

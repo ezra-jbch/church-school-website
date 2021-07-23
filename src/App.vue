@@ -1,16 +1,20 @@
 <template>
-  <Header @seeLogin="isVisible" />
   <div v-if="showLogin">
-    <Login @notLogin="notVisible" />
-  </div>
-  <Dropdown :pages="pageArray" />
-  <router-view v-slot="{ Component }">
-    <!--This is how you do transitions between routes-->
-    <transition name="route" mode="out-in">
-      <component :is="Component"></component>
+    <transition name="fadeIn" appear>
+      <Login @notLogin="notVisible" />
     </transition>
-  </router-view>
-  <Footer />
+  </div>
+  <div v-else>
+    <Header @seeLogin="isVisible" />
+    <Dropdown :pages="pageArray" />
+    <router-view v-slot="{ Component }">
+      <!--This is how you do transitions between routes-->
+      <transition name="route" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -74,6 +78,12 @@ body {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.fadeIn-enter-from {
+  opacity: 0;
+}
+.fadeIn-enter-active {
+  transition: opacity 0.5s ease-in;
 }
 /*route transitions*/
 .route-enter-from {
