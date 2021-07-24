@@ -1,8 +1,6 @@
 <template>
   <div v-if="showLogin">
-    <transition name="fadeIn" appear>
-      <Login @notLogin="notVisible" />
-    </transition>
+    <Login @notLogin="notVisible" />
   </div>
   <div v-else>
     <Header @seeLogin="isVisible" />
@@ -34,6 +32,9 @@ export default {
       ],
       showLogin: false,
     };
+  },
+  mounted:function(){
+    
   },
   methods: {
     isVisible() {
@@ -78,12 +79,6 @@ body {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
-.fadeIn-enter-from {
-  opacity: 0;
-}
-.fadeIn-enter-active {
-  transition: opacity 0.5s ease-in;
 }
 /*route transitions*/
 .route-enter-from {
