@@ -77,10 +77,4 @@ export default {
 .fadeIn-enter-active {
   transition: opacity 0.5s ease-in;
 }
-.fadeIn-leave-from {
-  opacity: 1;
-}
-.fadeIn-leave-active {
-  transition: opacity 5s ease-out;
-}
 </style>
