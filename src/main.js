@@ -10,6 +10,7 @@ import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 import 'primeicons/primeicons.css'
 /* import 'primevue/resources/primevue.min.css' */
 
+
 // PrimeVue components (import more components here as you see fit)
 import DataTable from 'primevue/datatable'
 
