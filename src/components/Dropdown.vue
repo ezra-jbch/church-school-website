@@ -1,27 +1,25 @@
 <template>
-  <div class="pos">
-    <div class="dropdown">
-      <button class="dropbtn">
-        Lessons
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-chevron-down"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-          />
-        </svg>
-      </button>
-      <div class="dropdown-content" style="left: 0">
-        <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
-        <div v-for="page in pages" :key="page" class="link-block">
-          <router-link :to="page.route">{{ page.page }}</router-link>
-        </div>
+  <div class="dropdown">
+    <button class="dropbtn">
+      Lessons
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-down"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+        />
+      </svg>
+    </button>
+    <div class="dropdown-content" style ="left:0">
+      <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
+      <div v-for="page in pages" :key="page" class="link-block">
+        <router-link :to="page.route">{{ page.page }}</router-link>
       </div>
     </div>
   </div>
@@ -35,11 +33,6 @@ export default {
 
 <style>
 /*Moves the dropdown to the left of the screen, under the logo*/
-.pos {
-  text-align: left;
-  margin-left: 1%;
-  margin-top: 1%;
-}
 /*Button*/
 .dropbtn {
   background-color: white;
@@ -58,6 +51,7 @@ export default {
 }
 /*Content that is dropping down*/
 .dropdown-content {
+  margin-left: 5%;
   background-color: #f9f9f9;
   position: absolute;
   right: 0;
@@ -79,11 +73,11 @@ export default {
   display: block;
   animation: fadeIn 0.5s ease-in-out;
 }
-@keyframes fadeIn{
-  from{
+@keyframes fadeIn {
+  from {
     opacity: 0;
   }
-  to{
+  to {
     opacity: 1;
   }
 }
@@ -95,6 +89,7 @@ export default {
   padding-left: 10%;
   display: block;
   transition: padding 0.5s;
+  text-align: left;
 }
 /*Change styles on dropdown when you hover over it*/
 .dropdown-content a:hover {

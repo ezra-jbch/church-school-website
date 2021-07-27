@@ -4,13 +4,19 @@
   </div>
   <div v-else>
     <Header @seeLogin="isVisible" />
-    <Dropdown :pages="pageArray" />
-    <router-view v-slot="{ Component }">
-      <!--This is how you do transitions between routes-->
-      <transition name="route" mode="out-in">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
+    <div class=".container-fluid d-flex justify-content-start">
+      <div class="row" id="navBar">
+        <Dropdown :pages="pageArray" />
+      </div>
+    </div>
+    <div class=".container-fluid">
+      <router-view v-slot="{ Component }">
+        <!--This is how you do transitions between routes-->
+        <transition name="route" mode="out-in">
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
+    </div>
     <Footer />
   </div>
 </template>
@@ -33,9 +39,7 @@ export default {
       showLogin: false,
     };
   },
-  mounted:function(){
-    
-  },
+  mounted: function () {},
   methods: {
     isVisible() {
       this.showLogin = true;
@@ -54,6 +58,10 @@ export default {
 Dark blue: #005595
 Lighter blue: #36b4e5
 */
+#navBar {
+  margin-left: 1%;
+  margin-top: 1%;
+}
 html,
 body {
   /*Fixed Margins of HTML Page*/
