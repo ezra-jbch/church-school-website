@@ -44,9 +44,6 @@ export default {
 </script>
 
 <style>
-.imgLogo{
-   
-}
 #login {
   text-decoration: none;
   display: flex;

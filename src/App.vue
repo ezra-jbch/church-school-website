@@ -4,9 +4,14 @@
   </div>
   <div v-else>
     <Header @seeLogin="isVisible" />
-    <Dropdown :pages="pageArray" />
+    <div class=".container-fluid d-flex justify-content-start">
+      <div class="row" id="navBar">
+        <Dropdown :pages="pageArray" />
+      </div>
+    </div>
     <router-view v-slot="{ Component }">
       <!--This is how you do transitions between routes-->
+      <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
       <transition name="route" mode="out-in">
         <component :is="Component"></component>
       </transition>
@@ -33,9 +38,7 @@ export default {
       showLogin: false,
     };
   },
-  mounted:function(){
-    
-  },
+  mounted: function () {},
   methods: {
     isVisible() {
       this.showLogin = true;
@@ -54,6 +57,10 @@ export default {
 Dark blue: #005595
 Lighter blue: #36b4e5
 */
+#navBar {
+  margin-left: 1%;
+  margin-top: 1%;
+}
 html,
 body {
   /*Fixed Margins of HTML Page*/
@@ -67,18 +74,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 /*route transitions*/
 .route-enter-from {
