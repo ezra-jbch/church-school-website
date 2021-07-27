@@ -1,10 +1,25 @@
 <template>
   <div class="pos">
     <div class="dropdown">
-      <button class="dropbtn">Lessons<i class="arrow down"></i></button>
+      <button class="dropbtn">
+        Lessons
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </button>
       <div class="dropdown-content" style="left: 0">
         <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
-        <div v-for="page in pages" :key="page">
+        <div v-for="page in pages" :key="page" class="link-block">
           <router-link :to="page.route">{{ page.page }}</router-link>
         </div>
       </div>
@@ -19,28 +34,11 @@ export default {
 </script>
 
 <style>
-/*
-YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better 
-*/
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos {
   text-align: left;
   margin-left: 1%;
   margin-top: 1%;
-}
-/*Design for the arrow by the dropdown*/
-.arrow {
-  border: solid black;
-  border-width: 0 1.5px 1.5px 0;
-  display: inline-block;
-  padding: 3px;
-  margin-left: 10px;
-  margin-bottom: 2.5px;
-}
-/*Put the arrow downwards*/
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
 }
 /*Button*/
 .dropbtn {
@@ -60,7 +58,6 @@ YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better
 }
 /*Content that is dropping down*/
 .dropdown-content {
-  display: block;
   background-color: #f9f9f9;
   position: absolute;
   right: 0;
@@ -68,22 +65,35 @@ YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin-top: 15px; /*Adds space between the button and what is dropping down*/
-  opacity: 0;
-  transform: translateY(-5%);
-  transition: opacity 0.5s, transform 0.5s;
+  height: 0px;
+  transition: height 0.2s;
 }
 /*white box that dropdowns*/
 .dropdown:hover .dropdown-content {
-  opacity: 1;
-  transform: translateY(0%);
+  height: 144px;
+}
+.link-block {
+  display: none;
+}
+.dropdown:hover .link-block {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
 /*This is the text that you see in the dropdown*/
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
-  display: block;
   padding-left: 10%;
+  display: block;
   transition: padding 0.5s;
 }
 /*Change styles on dropdown when you hover over it*/
@@ -101,12 +111,5 @@ YOU SHOULD USE VUE TRANSITIONS INSTEAD! Vue transitions will be much better
   /*Rounded edges*/
   border-radius: 50px;
   transition: background-color 0.5s ease-out;
-}
-/*Make arrow white when you hover over it*/
-.dropdown:hover .arrow {
-  border: solid white;
-  border-width: 0 1.5px 1.5px 0;
-  display: inline-block;
-  padding: 3px;
 }
 </style>
