@@ -3,7 +3,7 @@
         <!-- Copyright -->
         <p class="footer-text left">Jesus Baptist U.S.A. Conference © {{ currentYear }} All rights reserved</p>
         <!-- Contact Us page -->
-        <router-link class="footer-text border" :to="{ name: 'ContactUs' }">Contact Us</router-link>
+        <router-link class="footer-text knob" :to="{ name: 'ContactUs' }">Contact Us</router-link>
     </div>
 </template>
 
@@ -37,17 +37,18 @@ export default {
         font-family: "Open Sans", sans-serif;
         margin: 0;
     }
-    .border {
+    .knob {
         /* contact us button style */
         border-style: solid;
         border-radius: 10px;
         border-width: 2px;
         padding: 5px 10px;
     }
-    .border:hover {
+    .knob:hover {
         background: #505050;
+        color: #808080; /* overrides bootstrap css */
     }
-    .border:focus {
+    .knob:focus {
         /* button clicked (may end up removing this) */
         background: #808080;
         color: #333333;
