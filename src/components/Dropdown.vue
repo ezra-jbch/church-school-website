@@ -34,7 +34,6 @@ export default {
 </script>
 
 <style>
-
 /*Moves the dropdown to the left of the screen, under the logo*/
 .pos {
   text-align: left;
@@ -66,21 +65,27 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin-top: 15px; /*Adds space between the button and what is dropping down*/
-  transform: translateY(-15%);
-  opacity: 0;
-  transition: all 0.3s;
+  height: 0px;
+  transition: height 0.2s;
 }
 /*white box that dropdowns*/
 .dropdown:hover .dropdown-content {
-  transform: translateY(0%);
-  opacity: 1;
-  transition: all 0.3s;
+  height: 144px;
 }
-.link-block{
-  display:none;
+.link-block {
+  display: none;
 }
-.dropdown:hover .link-block{
+.dropdown:hover .link-block {
   display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
 /*This is the text that you see in the dropdown*/
 .dropdown-content a {
