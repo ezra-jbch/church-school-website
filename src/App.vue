@@ -11,6 +11,7 @@
     </div>
     <router-view v-slot="{ Component }">
       <!--This is how you do transitions between routes-->
+      <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
       <transition name="route" mode="out-in">
         <component :is="Component"></component>
       </transition>
