@@ -2,7 +2,7 @@
   <header class="header">
     <router-link :to="{ name: 'Home' }" id="router-link">
       <!-- Routes the page back to the Home page when you press on the Logo -->
-      <img src="../assets/logo.svg">
+      <img src="../assets/logo.svg" class ="imgLogo">
     </router-link>
     <div class="button-pos">
       <button class="btn btn-outline-secondary" id="login" @click ="isVisible">
@@ -62,7 +62,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8f8f8;
+  background-color:#f8f8f8;
   padding: 10px;
 }
 @media only screen and (max-width: 580px) {

@@ -19,7 +19,7 @@
       </button>
       <div class="dropdown-content" style="left: 0">
         <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
-        <div v-for="page in pages" :key="page">
+        <div v-for="page in pages" :key="page" class="link-block">
           <router-link :to="page.route">{{ page.page }}</router-link>
         </div>
       </div>
@@ -59,7 +59,6 @@ export default {
 }
 /*Content that is dropping down*/
 .dropdown-content {
-  display: block;
   background-color: #f9f9f9;
   position: absolute;
   right: 0;
@@ -67,22 +66,29 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin-top: 15px; /*Adds space between the button and what is dropping down*/
+  transform: translateY(-15%);
   opacity: 0;
-  transform: translateY(-5%);
-  transition: opacity 0.5s, transform 0.5s;
+  transition: all 0.3s;
 }
 /*white box that dropdowns*/
 .dropdown:hover .dropdown-content {
-  opacity: 1;
   transform: translateY(0%);
+  opacity: 1;
+  transition: all 0.3s;
+}
+.link-block{
+  display:none;
+}
+.dropdown:hover .link-block{
+  display: block;
 }
 /*This is the text that you see in the dropdown*/
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
-  display: block;
   padding-left: 10%;
+  display: block;
   transition: padding 0.5s;
 }
 /*Change styles on dropdown when you hover over it*/
