@@ -21,7 +21,6 @@ export default {
 <style>
     .footer {
         /* making footer flush to the bottom */
-        position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
@@ -63,7 +62,7 @@ export default {
         align-items: center;
     }
 
-    @media only screen and (max-width: 580px) {
+    @media only screen and (max-width: 600px) {
         /* for smaller screens (to prevent copyright and contact us squashing) */
         .footer {
             /* position the up and down as opposed to side by side */
