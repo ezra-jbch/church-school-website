@@ -12,7 +12,7 @@ export default {
   components:{TableBox},
   data() {
     return {
-      dataJson: dataBase.lessons.year_2021.youth_group,
+      dataJson: dataBase.lessons.year_2021.youth_group
     };
   }
 };

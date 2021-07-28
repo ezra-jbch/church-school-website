@@ -34,7 +34,7 @@
           <th scope="col">Sermon</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style= " text-align: center; vertical-align: middle;">
         <tr v-for="page in array1" :key="page">
           <td>{{ page.date }}</td>
           <td>{{ page.id }}</td>

@@ -2,7 +2,7 @@
   <header class="header">
     <router-link :to="{ name: 'Home' }" id="router-link">
       <!-- Routes the page back to the Home page when you press on the Logo -->
-      <img src="../assets/logo.svg" alt ="JBCH Church School" class ="imgLogo">
+      <img src="../assets/logo.svg" alt ="JBCH Church School">
     </router-link>
     <div class="button-pos">
       <button class="btn btn-outline-secondary" id="login" @click ="isVisible">
