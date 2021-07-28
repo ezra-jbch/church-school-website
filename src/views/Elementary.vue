@@ -1,5 +1,5 @@
 <template>
-  <div class="root">
+  <div class="lesson-table-padding">
     <h1>Elementary</h1>
     <TableBox :array1="dataJson"/>
   </div>
@@ -18,4 +18,5 @@ export default {
 </script>
 
 <style>
+
 </style>

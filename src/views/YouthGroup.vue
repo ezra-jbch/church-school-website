@@ -1,5 +1,5 @@
 <template>
-  <div class="root">
+  <div class="lesson-table-padding">
     <h1>Youth Group</h1>
     <TableBox :array1="dataJson" />
   </div>

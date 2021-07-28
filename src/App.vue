@@ -4,18 +4,22 @@
   </div>
   <div v-else>
     <Header @seeLogin="isVisible" />
-    <div class=".container-fluid d-flex justify-content-start">
-      <div class="row" id="navBar">
+    <div class="d-flex justify-content-start">
+      <div id="navBar">
         <Dropdown :pages="pageArray" />
       </div>
     </div>
-    <router-view v-slot="{ Component }">
-      <!--This is how you do transitions between routes-->
-      <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
-      <transition name="route" mode="out-in">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
+    <div class="container">
+      <div class="row">
+        <router-view v-slot="{ Component }">
+          <!--This is how you do transitions between routes-->
+          <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
+          <transition name="route" mode="out-in">
+            <component :is="Component"></component>
+          </transition>
+        </router-view>
+      </div>
+    </div>
     <Footer />
   </div>
 </template>
@@ -61,24 +65,15 @@ Lighter blue: #36b4e5
   margin-left: 1%;
   margin-top: 1%;
 }
-html,
-body {
+
+html, body {
   /*Fixed Margins of HTML Page*/
   margin: 0;
   padding: 0;
   overflow-x: clip; /*Need this to prevent overflow. Did not use 'overflow-x: hidden' because it breaks dropdown*/
+
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-body::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.route-leave-activebody{
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -86,19 +81,24 @@ body::-webkit-scrollbar {
   text-align: center;
   color: #2c3e50;
 }
+
 /*route transitions*/
 .route-enter-from {
   opacity: 0;
   transform: translateX(100px);
 }
+
 .route-enter-active {
   transition: all 0.2s ease-out;
 }
+
 .route-leave-to {
   opacity: 0;
   transform: translateX(-100px);
 }
+
 .route-leave-active {
   transition: all 0.2s ease-out;
 }
+
 </style>

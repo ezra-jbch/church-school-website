@@ -1,7 +1,7 @@
 <template>
   <transition name="fadeIn" appear>
     <div class="backdrop">
-      <div class="modalBox">
+      <div class="table-container">
         <div class="item-center">Login</div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 }
-.modalBox {
+.table-container {
   width: 30%;
   height: 50%;
   margin: 100px auto;
