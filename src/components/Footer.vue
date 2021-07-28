@@ -9,13 +9,15 @@
 
 <script>
 export default {
-    computed: {
-        currentYear() {
-            // updates the copyright year info automatically
-            return new Date().getFullYear()
-        }
-    }
-}
+
+  computed: {
+    currentYear() {
+      // updates the copyright year info automatically
+      return new Date().getFullYear();
+    },
+  },
+
+};
 </script>
 
 <style>

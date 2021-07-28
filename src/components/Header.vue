@@ -2,10 +2,10 @@
   <header class="header">
     <router-link :to="{ name: 'Home' }" id="router-link">
       <!-- Routes the page back to the Home page when you press on the Logo -->
-      <img src="../assets/logo.svg" alt ="JBCH Church School">
+      <img src="../assets/logo.svg" alt="JBCH Church School" />
     </router-link>
     <div class="button-pos">
-      <button class="btn btn-outline-secondary" id="login" @click ="isVisible">
+      <button class="btn btn-outline-secondary" id="login" @click="isVisible">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -31,15 +31,15 @@
 
 <script>
 export default {
-  data(){
-    return{
-    }
+  data() {
+    return {};
   },
+
   methods: {
-    isVisible(){
+    isVisible() {
       this.$emit("seeLogin");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -50,21 +50,25 @@ export default {
   align-items: center;
   color: black;
 }
+
 .button-pos {
   margin-right: 2%;
 }
+
 #router-link {
   display: inline-block;
   width: 30%;
   margin-left: 1%;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color:#f8f8f8;
+  background-color: #f8f8f8;
   padding: 10px;
 }
+
 @media only screen and (max-width: 580px) {
   /* For mobile phones: */
   #router-link {

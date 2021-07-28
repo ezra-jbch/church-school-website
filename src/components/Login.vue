@@ -27,6 +27,7 @@ export default {
   data() {
     return {};
   },
+
   methods: {
     notVisible() {
       this.$emit("notLogin");
@@ -43,10 +44,12 @@ export default {
   margin-left: auto;
   transform: scale(1.2);
 }
+
 #item-right:hover {
   cursor: pointer;
   fill: #005595;
 }
+
 .item-center {
   flex: 0 1 auto;
   font-size: 200%;
@@ -54,6 +57,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .table-container {
   width: 30%;
   height: 50%;
@@ -64,6 +68,7 @@ export default {
   justify-content: flex-start; /* adjustment */
   position: relative;
 }
+
 .backdrop {
   top: 0;
   position: fixed;
@@ -71,9 +76,11 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .fadeIn-enter-from {
   opacity: 0;
 }
+
 .fadeIn-enter-active {
   transition: opacity 0.5s ease-in;
 }
