@@ -4,11 +4,11 @@
       <thead>
         <tr>
           <!--Columns for the table-->
-          <th scope="col">Date</th>
-          <th scope="col">Chapter</th>
-          <th scope="col">Title</th>
-          <th scope="col">PDF</th>
-          <th scope="col">Sermon</th>
+          <th style="width: 5%" scope="col">Date</th>
+          <th style="width: 5%" scope="col">Chapter</th>
+          <th style="width: 20%" scope="col">Title</th>
+          <th style="width: 5%" scope="col">PDF</th>
+          <th style="width: 5%" scope="col">Sermon</th>
         </tr>
       </thead>
       <tbody style="text-align: center; vertical-align: middle">
@@ -74,13 +74,13 @@ export default {
 /*https://vuejs.org/v2/guide/transitions.html*/
 .list-enter-active,
 .list-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease-in-out;
 }
-
-.list-enter-from,
+.list-enter,
 .list-leave-to {
   opacity: 0;
 }
+
 #table-container {
   background-color: white;
   margin-top: 2%;

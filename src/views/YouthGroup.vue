@@ -1,41 +1,45 @@
 <template>
   <div class="lesson-table-padding">
     <!--See global css in assets folder-->
-    <div class="btn-group">
-      <button
-        type="button"
-        class="btn btn-primary dropdown-toggle"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        style="background-color: #005595; border-color: #005595"
-      >
-        {{ this.showYear }}
-      </button>
-      <ul class="dropdown-menu" style="cursor:pointer">
-        <li>
-          <a
-            class="dropdown-item"
-            @click="determineCurrentCycle(this.currentYear - 1)"
-            >{{ this.currentYear - 1 }}</a
-          >
-        </li>
-        <li>
-          <a
-            class="dropdown-item"
-            @click="determineCurrentCycle(this.currentYear)"
-            >{{ this.currentYear }}</a
-          >
-        </li>
-        <li>
-          <a
-            class="dropdown-item"
-            @click="determineCurrentCycle(this.currentYear + 1)"
-            >{{ this.currentYear + 1 }}</a
-          >
-        </li>
-      </ul>
+    <div class="align-stuff">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          style="background-color: #005595; border-color: #005595"
+        >
+          {{ this.showYear }}
+        </button>
+        <ul class="dropdown-menu" style="cursor: pointer">
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear - 1)"
+              >{{ this.currentYear - 1 }}</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear)"
+              >{{ this.currentYear }}</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear + 1)"
+              >{{ this.currentYear + 1 }}</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
-    <h1>Youth Group True Light</h1>
+    <div style="padding: 0px 100px 0px 0px">
+        <h1>Youth Group True Light</h1>
+    </div>
     <TableBox :array1="dataJson" />
   </div>
 </template>
@@ -132,4 +136,7 @@ export default {
 </script>
 
 <style>
+.align-stuff {
+  float: left;
+}
 </style>
