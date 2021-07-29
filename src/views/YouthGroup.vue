@@ -1,6 +1,5 @@
 <template>
-  <div class="lesson-table-padding">
-    <!--See global css in assets folder-->
+  <div class="lesson-table-padding"> <!--See global css in assets folder-->
     <div class="align-stuff">
       <div class="btn-group">
         <button
@@ -136,6 +135,7 @@ export default {
 </script>
 
 <style>
+
 .align-stuff {
   float: left;
 }

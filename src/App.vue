@@ -23,7 +23,7 @@
         </router-view>
       </div>
     </div>
-    <Footer />
+    <br><Footer />
   </div>
 </template>
 

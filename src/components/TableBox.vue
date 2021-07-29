@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody style="text-align: center; vertical-align: middle">
-        <transition-group name="list">
+        <transition-group name="list" mode="out-in">
           <!--Looping through db.json file to get individual column elements-->
           <tr v-for="page in array1" :key="page">
             <td>{{ page.date }}</td>
@@ -53,7 +53,7 @@ export default {
     },
     openSermon(vid){
       window.open(vid);
-    }
+    },
   },
 };
 </script>
@@ -72,13 +72,13 @@ export default {
   color: white;
 }
 /*https://vuejs.org/v2/guide/transitions.html*/
-.list-enter-active,
-.list-leave-active {
-  transition: opacity 0.5s ease-in-out;
+
+.list-enter-active, .list-leave-active {
+  transition: opacity 0.5s ease
 }
-.list-enter,
-.list-leave-to {
-  opacity: 0;
+
+.list-enter-from, .list-leave-to {
+  opacity: 0
 }
 
 #table-container {
