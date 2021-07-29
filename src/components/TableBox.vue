@@ -19,14 +19,17 @@
             <td>{{ page.chapter }}</td>
             <td>{{ page.title }}</td>
             <td>
-              <a :href="'./2021 True Light/' + page.pdf" target="_blank"> <!--page.pdf only contains name of file, not the path-->
-                <button class="btn btn-outline-primary">Download</button>
-              </a>
+              <button
+                class="btn btn-outline-primary"
+                id="testa"
+                @click="openPDF(page.pdf)"
+                :disabled="page.pdf == ''"
+              >
+                Download
+              </button>
             </td>
             <td>
-              <a :href="page.sermon" target="_blank"> <!--Youtube link-->
-                <button class="btn btn-outline-primary">Watch</button>
-              </a>
+              <button class="btn btn-outline-primary" id="testa" @click="openSermon(page.sermon)" :disabled="page.sermon == ''">Watch</button>
             </td>
           </tr>
         </transition-group>
@@ -44,17 +47,38 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    openPDF(page) {
+      window.open("./2021 True Light/" + page);
+    },
+    openSermon(vid){
+      window.open(vid);
+    }
+  },
 };
 </script>
 
 <style>
+#testa:disabled{
+  border-color: grey;
+  color:grey;
+}
+#testa {
+  border-color: #005595;
+  color: #005595;
+}
+#testa:hover {
+  background-color: #005595;
+  color: white;
+}
 /*https://vuejs.org/v2/guide/transitions.html*/
-.list-enter-active, .list-leave-active {
-  transition: opacity .5s ease;
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.5s ease;
 }
 
-.list-enter-from, .list-leave-to {
+.list-enter-from,
+.list-leave-to {
   opacity: 0;
 }
 #table-container {
