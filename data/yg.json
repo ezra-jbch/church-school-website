@@ -1,8 +1,8 @@
 {
   "youth_group":{
     "cycle1":[
-      {"chapter": "1", "date":"", "title": "","pdf": "","sermon":""},
-      {"chapter": "2", "date":"", "title": "","pdf": "","sermon":""},
+      {"chapter": "1", "date":"", "title": "The Word in My Heart","pdf": "","sermon":""},
+      {"chapter": "2", "date":"", "title": "Answered Prayers","pdf": "","sermon":""},
       {"chapter": "3", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "4", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "5", "date":"", "title": "","pdf": "","sermon":""},
@@ -55,8 +55,8 @@
       {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""}
     ],
     "cycle2":[
-      {"chapter": "1", "date":"", "title": "Daily Bible Study","pdf": "","sermon":""},
-      {"chapter": "2", "date":"", "title": "In This Manner Pray","pdf": "","sermon":""},
+      {"chapter": "1", "date":"", "title": "Daily Bible Study","pdf": "Chapter 1 Daily Bible Study.pdf", "sermon":"https://youtu.be/3fyTOiK29nM"},
+      {"chapter": "2", "date":"", "title": "In This Manner Pray","pdf": "Chapter 2 In This Manner Pray.pdf","sermon":"https://youtu.be/swizswbN8zw"},
       {"chapter": "3", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "4", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "5", "date":"", "title": "","pdf": "","sermon":""},
@@ -109,8 +109,8 @@
       {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""}
     ],
     "cycle3":[
-      {"chapter": "1", "date":"", "title": "","pdf": "","sermon":""},
-      {"chapter": "2", "date":"", "title": "","pdf": "","sermon":""},
+      {"chapter": "1", "date":"", "title": "I Am a Growing Saint","pdf": "","sermon":""},
+      {"chapter": "2", "date":"", "title": "The Dream of a Christian","pdf": "","sermon":""},
       {"chapter": "3", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "4", "date":"", "title": "","pdf": "","sermon":""},
       {"chapter": "5", "date":"", "title": "","pdf": "","sermon":""},

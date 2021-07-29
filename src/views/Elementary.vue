@@ -1,7 +1,7 @@
 <template>
   <div class="lesson-table-padding">
     <!--See global css in assets folder-->
-    <h1>Elementary</h1>
+    <h1>Elementary Cornerstone</h1>
     <TableBox :array1="dataJson" />
   </div>
 </template>

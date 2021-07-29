@@ -1,7 +1,7 @@
 <template>
   <div class="lesson-table-padding">
     <!--See global css in assets folder-->
-    <h1>Youth Group</h1>
+    <h1>Youth Group True Light</h1>
     <div class="btn-group">
       <button
         type="button"
@@ -12,12 +12,30 @@
         Year
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <li>
+          <a
+            class="dropdown-item"
+            @click="changeCurrentYear(this.currentYear - 1)"
+            >{{ this.currentYear - 1 }}</a
+          >
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            @click="changeCurrentYear(this.currentYear)"
+            >{{ this.currentYear }}</a
+          >
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            @click="changeCurrentYear(this.currentYear + 1)"
+            >{{ this.currentYear + 1 }}</a
+          >
+        </li>
       </ul>
     </div>
-    <TableBox :array1="dataJson" />
+      <TableBox :array1="dataJson" />
   </div>
 </template>
 
@@ -44,6 +62,9 @@ export default {
   },
 
   methods: {
+    changeCurrentYear(year) {
+      this.determineCurrentCycle(year);
+    },
     determineDate(year) {
       var date = new Date(year, 0, 1);
       while (date.getDay() != 0) {
@@ -53,9 +74,7 @@ export default {
       while (date.getFullYear() == year) {
         var m = date.getMonth() + 1;
         var d = date.getDate();
-        days.push(
-          (m < 10 ? "0" + m : m) + "/" + (d < 10 ? "0" + d : d)
-        );
+        days.push((m < 10 ? "0" + m : m) + "/" + (d < 10 ? "0" + d : d));
         date.setDate(date.getDate() + 7);
       }
       return days;
@@ -75,33 +94,33 @@ export default {
           }
         }
       }
-      this.determineCurrentCycle();
+      this.determineCurrentCycle(this.currentYear);
     },
 
-    determineCurrentCycle() {
-      var num = parseInt(this.currentYear);
-      if (((num - 1) % 3) == 0) {
+    determineCurrentCycle(year) {
+      var num = parseInt(year);
+      if ((num - 1) % 3 == 0) {
         this.dataJson = this.c1_YG;
       }
-      if (((num - 1) % 3) == 1) {
+      if ((num - 1) % 3 == 1) {
         this.dataJson = this.c2_YG;
       }
-      if (((num - 1) % 3) == 2) {
+      if ((num - 1) % 3 == 2) {
         this.dataJson = this.c3_YG;
       }
       this.addDates();
     },
-    
-    addDates(){
+
+    addDates() {
       var arrDate = this.determineDate(this.currentYear);
-      console.log(arrDate);
-      for(var i in this.dataJson){
+      for (var i in this.dataJson) {
         this.dataJson[i].date = arrDate[i];
       }
-    }
+    },
   },
 };
 </script>
 
 <style>
+
 </style>
