@@ -16,14 +16,24 @@
         <tr v-for="page in this.arr[this.cycle]" :key="page">
           <td>{{ page.date }}</td>
           <td>{{ page.chapter }}</td>
-          <td>{{ page.title}}</td>
+          <td>{{ page.title }}</td>
           <td>
-            <button class="btn btn-outline-primary" id="buttonStyle">
+            <button
+              class="btn btn-outline-primary"
+              id="buttonStyle"
+              @click="openPDF(page.pdf)"
+              :disabled="page.pdf == ''"
+            >
               Download
             </button>
           </td>
           <td>
-            <button class="btn btn-outline-primary" id="buttonStyle">
+            <button
+              class="btn btn-outline-primary"
+              id="buttonStyle"
+              @click="openSermon(page.sermon)"
+              :disabled="page.sermon == ''"
+            >
               Watch
             </button>
           </td>
@@ -35,24 +45,41 @@
 
 <script>
 export default {
-  props: ["path"] /*path is the directly of json file*/,
+  /*path is the directly of json file*/
+  props: ["path"],
   data() {
     return {
-      currentYear: new Date().getFullYear(),
+      currentYear: new Date().getFullYear() /*Current Year*/,
       arr: [] /*3D array of all the cycles*/,
-      cycle: 0,
-      display: [],
+      cycle: 0 /*Determine cycle1, cycle2, cycle3*/,
+      currentMonth: 0,
+      currentDay: 0,
     };
   },
   mounted() {
-    var json = require("../../data/" +
-      this.path +
-      ".json"); /*Dynamically getting json file*/
-    this.arrayToString(
-      json
-    ); /*This method strips the json file into smaller arrays*/
+    /*Dynamically getting json file*/
+    var json = require("../../data/" + this.path + ".json");
+
+    /*This method strips the json file into smaller arrays*/
+    this.arrayToString(json);
+    this.formatDate();
   },
   methods: {
+    openPDF(page) {
+      window.open("./2021 True Light/" + page);
+    },
+    openSermon(vid) {
+      window.open(vid);
+    },
+    formatDate() {
+      let temp = new Date().toISOString().slice(0, 10);
+      let temp2 = temp.toString().substring(5, temp.length);
+      let temp3 = temp2.replace("-", "/");
+      this.currentMonth = parseInt(temp3.substring(0, 2));
+      this.currentDay = parseInt(temp3.substring(3, temp3.length));
+      console.log(this.currentMonth);
+      console.log(this.currentDay);
+    },
     arrayToString(json) {
       for (var cycle in json[this.path]) {
         var tempChapters = [];
@@ -101,4 +128,21 @@ export default {
 </script>
 
 <style>
+#buttonStyle:disabled {
+  border-color: grey;
+  color: grey;
+}
+#table-container {
+  background-color: white;
+  margin-top: 2%;
+  border: 1px solid black;
+}
+#buttonStyle {
+  border-color: #005595;
+  color: #005595;
+}
+#buttonStyle:hover {
+  background-color: #005595;
+  color: white;
+}
 </style>

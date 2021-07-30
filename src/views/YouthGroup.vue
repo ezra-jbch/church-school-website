@@ -1,6 +1,6 @@
 <template>
   <div class="lesson-table-padding">
-    <h1>YG</h1>
+    <h1>Youth Group True Light</h1>
     <TableBox :path="path"  />
   </div>
 </template>
