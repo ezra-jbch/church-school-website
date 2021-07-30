@@ -14,14 +14,18 @@
       <tbody style="text-align: center; vertical-align: middle">
         <transition-group name="list" mode="out-in">
           <!--Looping through db.json file to get individual column elements-->
-          <tr v-for="page in array1" :key="page">
+          <tr
+            v-for="page in array1"
+            :key="page"
+            v-bind:style="{ 'background-color': changeColor(page.date) }"
+          >
             <td>{{ page.date }}</td>
             <td>{{ page.chapter }}</td>
             <td>{{ page.title }}</td>
             <td>
               <button
                 class="btn btn-outline-primary"
-                id="testa"
+                id="buttonStyle"
                 @click="openPDF(page.pdf)"
                 :disabled="page.pdf == ''"
               >
@@ -29,7 +33,14 @@
               </button>
             </td>
             <td>
-              <button class="btn btn-outline-primary" id="testa" @click="openSermon(page.sermon)" :disabled="page.sermon == ''">Watch</button>
+              <button
+                class="btn btn-outline-primary"
+                id="buttonStyle"
+                @click="openSermon(page.sermon)"
+                :disabled="page.sermon == ''"
+              >
+                Watch
+              </button>
             </td>
           </tr>
         </transition-group>
@@ -42,43 +53,76 @@
 export default {
   props: [
     "array1",
+    "yearCheck",
   ] /*array1 is the array from the db.json that contains church school material*/,
 
   data() {
-    return {};
+    return {
+      year: new Date().getFullYear(),
+      month: new Date().toISOString().slice(0, 10),
+      formattedDate: "",
+      color: "black",
+    };
+  },
+  mounted() {
+    this.formatDate();
   },
   methods: {
+    formatDate() {
+      let temp = this.month.toString().substring(5, this.month.length);
+      this.formattedDate = temp;
+      this.formattedDate = this.formattedDate.replace("-", "/");
+    },
     openPDF(page) {
       window.open("./2021 True Light/" + page);
     },
-    openSermon(vid){
+    openSermon(vid) {
       window.open(vid);
+    },
+    changeColor(date) {
+      if (this.yearCheck == this.year) {
+        var dateMonth = parseInt(date.substring(0, 2));
+        var dateDay = parseInt(date.substring(3, date.length));
+        var currentMonth = parseInt(this.formattedDate.substring(0, 2));
+        var currentDay = parseInt(
+          this.formattedDate.substring(3, this.formattedDate.length)
+        );
+        if (dateMonth < currentMonth) {
+          return (this.color = "#e8f4f8");
+        } else {
+          if (dateMonth == currentMonth && dateDay < currentDay) {
+            return (this.color = "#e8f4f8");
+          }
+        }
+      }
     },
   },
 };
 </script>
 
 <style>
-#testa:disabled{
+#buttonStyle:disabled {
   border-color: grey;
-  color:grey;
+  color: grey;
 }
-#testa {
+#buttonStyle {
   border-color: #005595;
   color: #005595;
 }
-#testa:hover {
+#buttonStyle:hover {
   background-color: #005595;
   color: white;
 }
 /*https://vuejs.org/v2/guide/transitions.html*/
 
-.list-enter-active, .list-leave-active {
-  transition: opacity 0.5s ease
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.5s ease;
 }
 
-.list-enter-from, .list-leave-to {
-  opacity: 0
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
 }
 
 #table-container {

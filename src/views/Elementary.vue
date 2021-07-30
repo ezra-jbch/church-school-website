@@ -52,7 +52,6 @@ export default {
       dataJson: [],
       c1_ELEM: [],
       c2_ELEM: [],
-      dataJson: [],
     };
   },
   mounted() {
@@ -62,11 +61,13 @@ export default {
   methods: {
     arrayToString() {
       for (var i in this.elemDatabase.elem) {
-        for (var j in this.elemDatabase.elem[i]) {
-          if (i == "cycle1") {
+        if (i == "cycle1") {
+          for (var j in this.elemDatabase.elem[i]) {
             this.c1_ELEM.push(this.elemDatabase.elem[i][j]);
           }
-          if (i == "cycle2") {
+        }
+        if (i == "cycle2") {
+          for (var j in this.elemDatabase.elem[i]) {
             this.c2_ELEM.push(this.elemDatabase.elem[i][j]);
           }
         }
@@ -86,8 +87,11 @@ export default {
     addDates(year) {
       /*For a given year, this method gets the current year, and adds the sundays for that year in an array*/
       var arrDate = this.determineDate(year);
-      for (var i in this.dataJson) {
+      for (var i = 0; i < arrDate.length; i++) {
         this.dataJson[i].date = arrDate[i];
+      }
+      if (this.dataJson[52].date == "") {
+        this.dataJson.splice(52, 1);
       }
       this.changeCurrentYear(year);
     },

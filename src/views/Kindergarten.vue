@@ -35,8 +35,11 @@ export default {
     },
     addDates() {
       var arrDate = this.determineDate(this.currentYear);
-      for (var i in this.dataJson) {
+      for (var i = 0; i < arrDate.length; i++) {
         this.dataJson[i].date = arrDate[i];
+      }
+      if(this.dataJson[52].date == ""){
+        this.dataJson.splice(52, 1);
       }
     },
     determineDate(year) {

@@ -52,7 +52,8 @@
         {"chapter": "49", "date":"", "title": "","pdf": "","sermon":""},
         {"chapter": "50", "date":"", "title": "","pdf": "","sermon":""},
         {"chapter": "51", "date":"", "title": "","pdf": "","sermon":""},
-        {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""}
+        {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""},
+        {"chapter": "53", "date":"", "title": "","pdf": "","sermon":""}
       ],
       "cycle2":[
         {"chapter": "1", "date":"", "title": "","pdf": "","sermon":""},
@@ -106,7 +107,8 @@
         {"chapter": "49", "date":"", "title": "","pdf": "","sermon":""},
         {"chapter": "50", "date":"", "title": "","pdf": "","sermon":""},
         {"chapter": "51", "date":"", "title": "","pdf": "","sermon":""},
-        {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""}
+        {"chapter": "52", "date":"", "title": "","pdf": "","sermon":""},
+        {"chapter": "53", "date":"", "title": "","pdf": "","sermon":""}
       ]
     }
   }
