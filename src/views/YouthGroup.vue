@@ -1,38 +1,151 @@
 <template>
-  <div class="root">
-    <h1>Youth Group</h1>
-    <TableBox :array1="arrayBox" />
+  <div class="lesson-table-padding"> <!--See global css in assets folder-->
+    <div class="align-stuff">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          style="background-color: #005595; border-color: #005595"
+        >
+          {{ this.showYear }}
+        </button>
+        <ul class="dropdown-menu" style="cursor: pointer">
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear - 1)"
+              >{{ this.currentYear - 1 }}</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear)"
+              >{{ this.currentYear }}</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              @click="determineCurrentCycle(this.currentYear + 1)"
+              >{{ this.currentYear + 1 }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding: 0px 100px 0px 0px">
+        <h1>Youth Group True Light</h1>
+    </div>
+    <TableBox :array1="dataJson" :yearCheck ="showYear"/>
   </div>
 </template>
 
 <script>
-import TableBox from "../components/TableBox.vue"
+import TableBox from "../components/TableBox.vue"; /*This component is the table of chapters that you see. It is reused in YG, ELEM, and KIND pages.*/
+import ygJSON from "../../data/yg.json"; /*Json file for the Youth Group materials*/
+
 export default {
-  components:{TableBox},
+  components: { TableBox },
+
   data() {
     return {
-      arrayBox: [
-        {
-          id: "1",
-          date: "01/03",
-          title: "Daily Bible Study",
-          pdf: "",
-          sermon:
-            "https://www.youtube.com/watch?v=3fyTOiK29nM&list=PLWj53mXE8Z2SGZVwNEZLbWkllo1KrC4lv&index=1&ab_channel=JBChurchSchool",
-        },
-        {
-          id: "2",
-          date: "01/10",
-          title: "In This Manner Pray",
-          pdf: "",
-          sermon:
-            "https://www.youtube.com/watch?v=swizswbN8zw&list=PLWj53mXE8Z2SGZVwNEZLbWkllo1KrC4lv&index=3&ab_channel=JBChurchSchool",
-        },
-      ],
+      currentYear:new Date().getFullYear(),
+      showYear: 0,
+      ygDatabase: ygJSON /*Save json data into array*/,
+      c1_YG: [] /*Cycle1 True Light materials*/,
+      c2_YG: [] /*Cycle2 True Light materials*/,
+      c3_YG: [] /*Cycle3 True Light materials*/,
+      dataJson:
+        [] /*Temp Array that determines what will be displayed on the screen*/,
     };
+  },
+
+  mounted() {
+    /*When this page is mounted, call arrayToString.*/
+    this.arrayToString(); /*arrayToString gets the json data and splits it into the cycle arrays (Cycle1, cycle2, cycle3)*/
+  },
+
+  methods: {
+    arrayToString() {
+      /*This method gets the json data and sorts it into the necessary cycles (cycle1, cycle2, cycle3)*/
+      for (var i in this.ygDatabase.youth_group) {
+        if (i == "cycle1") {
+          for(var j in this.ygDatabase.youth_group[i]){
+            this.c1_YG.push(this.ygDatabase.youth_group[i][j]);
+          }
+        }
+        if (i == "cycle2") {
+          for(var j in this.ygDatabase.youth_group[i]){
+            this.c2_YG.push(this.ygDatabase.youth_group[i][j]);
+          }
+        }
+        if (i == "cycle3") {
+          for(var j in this.ygDatabase.youth_group[i]){
+            this.c3_YG.push(this.ygDatabase.youth_group[i][j]);
+          }
+        }
+      }
+      this.determineCurrentCycle(
+        this.currentYear
+      ); /*This method determines for a given year which cycle it is in*/
+    },
+    determineCurrentCycle(year) {
+      /*This method determines for a given year which cycle it is in*/
+      /*For example, 2020 is cycle1, 2021 is cycle2, 2022 is cycle3*/
+      var num = parseInt(year);
+      if ((num - 1) % 3 == 0) {
+        this.dataJson = this.c1_YG;
+      }
+      if ((num - 1) % 3 == 1) {
+        this.dataJson = this.c2_YG;
+      }
+      if ((num - 1) % 3 == 2) {
+        this.dataJson = this.c3_YG;
+      }
+      this.addDates(year);
+    },
+    addDates(year) {
+      /*For a given year, this method gets the current year, and adds the sundays for that year in an array*/
+      console.log("hey")
+      var arrDate = this.determineDate(year);
+      for (var i = 0; i < arrDate.length; i++) {
+        this.dataJson[i].date = arrDate[i];
+        setTimeout(console.log(i), 1000)
+      }
+      if(arrDate.length < 53){
+        this.dataJson.splice(52, 1);
+      }
+      this.changeCurrentYear(year);
+    },
+    
+    determineDate(year) {
+      /*Method used to create an array that returns every sunday in year for a given year*/
+      var date = new Date(year, 0, 1);
+      while (date.getDay() != 0) {
+        date.setDate(date.getDate() + 1);
+      }
+      var days = [];
+      while (date.getFullYear() == year) {
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        days.push((m < 10 ? "0" + m : m) + "/" + (d < 10 ? "0" + d : d));
+        date.setDate(date.getDate() + 7);
+      }
+      return days; /*Array of sundays for the year*/
+    },
+    changeCurrentYear(year) {
+      this.showYear = year;
+    },
   },
 };
 </script>
 
 <style>
+
+.align-stuff {
+  float: left;
+}
 </style>

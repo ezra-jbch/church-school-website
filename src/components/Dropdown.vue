@@ -16,7 +16,7 @@
         />
       </svg>
     </button>
-    <div class="dropdown-content" style ="left:0">
+    <div class="dropdown-content" style="left: 0">
       <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
       <div v-for="page in pages" :key="page" class="link-block">
         <router-link :to="page.route">{{ page.page }}</router-link>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ["pages"],
+  props: ["pages"], /*Pages is an array of pages that the routes can transition to*/
 };
 </script>
 
@@ -43,12 +43,14 @@ export default {
   border-radius: 50px;
   transition: all 0.3s ease-out;
 }
+
 /*Dropdown*/
 .dropdown {
   border-bottom: 15px solid transparent; /*Added invisible border around this div so that you can add margins to button and dropdown without hovering issues*/
   position: relative;
   display: inline-block;
 }
+
 /*Content that is dropping down*/
 .dropdown-content {
   margin-left: 5%;
@@ -62,17 +64,22 @@ export default {
   height: 0px;
   transition: height 0.2s;
 }
-/*white box that dropdowns*/
+
+/*Dropdown on hover*/
 .dropdown:hover .dropdown-content {
   height: 144px;
 }
+
+/*Content inside of dropdown*/
 .link-block {
   display: none;
 }
+
 .dropdown:hover .link-block {
   display: block;
   animation: fadeIn 0.5s ease-in-out;
 }
+/*animation for content of dropdown.*/
 @keyframes fadeIn {
   from {
     opacity: 0;
