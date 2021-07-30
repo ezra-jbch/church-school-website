@@ -3,7 +3,7 @@
     <div style="text-align: center">
       <h1>Contact Us</h1>
     </div>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <label>Name:</label>
       <input type="name" required v-model="name" />
 
@@ -31,6 +31,9 @@ export default {
     };
   },
   method: {
+    handleSubmit(){
+      /*Get data and submit to database*/
+    }
   },
 };
 </script>
