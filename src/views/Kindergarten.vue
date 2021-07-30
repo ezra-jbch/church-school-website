@@ -38,7 +38,7 @@ export default {
       for (var i = 0; i < arrDate.length; i++) {
         this.dataJson[i].date = arrDate[i];
       }
-      if(this.dataJson[52].date == ""){
+      if(arrDate.length < 53){
         this.dataJson.splice(52, 1);
       }
     },

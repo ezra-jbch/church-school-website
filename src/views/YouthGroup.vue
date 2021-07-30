@@ -113,7 +113,6 @@ export default {
       var arrDate = this.determineDate(year);
       for (var i = 0; i < arrDate.length; i++) {
         this.dataJson[i].date = arrDate[i];
-        setTimeout(console.log(i), 1000)
       }
       if(arrDate.length < 53){
         this.dataJson.splice(52, 1);
