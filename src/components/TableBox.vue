@@ -13,7 +13,11 @@
       </thead>
       <tbody style="text-align: center; vertical-align: middle">
         <!--Looping through db.json file to get individual column elements-->
-        <tr v-for="page in this.arr[this.cycle]" :key="page">
+        <tr
+          v-for="page in this.arr[this.cycle]"
+          :key="page"
+          v-bind:style="{ 'background-color': changeColor(page.date) }"
+        >
           <td>{{ page.date }}</td>
           <td>{{ page.chapter }}</td>
           <td>{{ page.title }}</td>
@@ -46,20 +50,20 @@
 <script>
 export default {
   /*path is the directly of json file*/
-  props: ["path"],
+  props: ["path", "showYear"],
   data() {
     return {
-      currentYear: new Date().getFullYear() /*Current Year*/,
+      currentYear: this.showYear,
       arr: [] /*3D array of all the cycles*/,
       cycle: 0 /*Determine cycle1, cycle2, cycle3*/,
       currentMonth: 0,
       currentDay: 0,
+      color: "",
     };
   },
   mounted() {
     /*Dynamically getting json file*/
     var json = require("../../data/" + this.path + ".json");
-
     /*This method strips the json file into smaller arrays*/
     this.arrayToString(json);
     this.formatDate();
@@ -77,8 +81,6 @@ export default {
       let temp3 = temp2.replace("-", "/");
       this.currentMonth = parseInt(temp3.substring(0, 2));
       this.currentDay = parseInt(temp3.substring(3, temp3.length));
-      console.log(this.currentMonth);
-      console.log(this.currentDay);
     },
     arrayToString(json) {
       for (var cycle in json[this.path]) {
@@ -88,7 +90,7 @@ export default {
         }
         this.arr.push(tempChapters);
       }
-      this.calculateCycle(this.currentYear);
+      this.calculateCycle(this.showYear);
     },
     calculateCycle(year) {
       /*This method determines for a given year which cycle it is in*/
@@ -122,6 +124,20 @@ export default {
         date.setDate(date.getDate() + 7);
       }
       return days; /*Array of sundays for the year*/
+    },
+    changeColor(date) {
+      this.calculateCycle(this.showYear);
+      if (this.currentYear == this.showYear) {
+        var dateMonth = parseInt(date.substring(0, 2));
+        var dateDay = parseInt(date.substring(3, date.length));
+        if (dateMonth < this.currentMonth) {
+          return (this.color = "#e8f4f8");
+        } else {
+          if (dateMonth == this.currentMonth && dateDay < this.currentDay) {
+            return (this.color = "#e8f4f8");
+          }
+        }
+      }
     },
   },
 };
