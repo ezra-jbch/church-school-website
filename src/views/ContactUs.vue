@@ -5,25 +5,33 @@
     </div>
     <form>
       <label>Name:</label>
-      <input type="name" required v-model="name"/>
-      
+      <input type="name" required v-model="name" />
+
       <label>Email:</label>
-      <input type="email" required v-model="email"/>
+      <input type="email" required v-model="email" />
 
       <label>Message:</label>
-      <input type="message" required/>
+      <!--Need to make input box for this bigger-->
+      <input type="message" required v-model="message" />
+
+      <div class="submit">
+        <button class="submitBtn">Submit</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
-      name: '',
-      email: '',
-    }
-  }
+  data() {
+    return {
+      name: "",
+      email: "",
+      message: "",
+    };
+  },
+  method: {
+  },
 };
 </script>
 
@@ -54,5 +62,16 @@ input {
   border: none;
   border-bottom: 1px solid #ddd;
   color: black;
+}
+.submitBtn {
+  background: #0b6dff;
+  border:0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 20px;
+}
+.submit{
+  text-align: center;
 }
 </style>
