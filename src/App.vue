@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       /*This array is used to transition between pages*/
+      // naming doesn't need to include the data type. The name should be self explanatory
       pageArray: [
         { page: "Kindergarten", route: "Kindergarten" },
         { page: "Elementary", route: "Elementary" },
@@ -48,6 +49,7 @@ export default {
   },
 
   methods: {
+    // naming is misleading - I would expect a Boolean to be returned here
     isVisible() {
       this.showLogin = true;
       /*console.log(this.showLogin);*/
