@@ -12,12 +12,8 @@
         </tr>
       </thead>
       <tbody style="text-align: center; vertical-align: middle">
-        <!--Looping through db.json file to get individual column elements-->
-        <transition-group name="mode-fade" mode="out-in">
-          <tr
-            v-for="chapter in this.currentChaptersOfCycle"
-            :key="chapter"
-          >
+          <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
+          <tr v-for="chapter in this.currentChaptersOfCycle" :key="chapter">
             <td>{{ chapter.date }}</td>
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
@@ -28,81 +24,95 @@
                   id="buttonStyle"
                   :disabled="chapter.pdf == ''"
                 >
+                  <!--If there is no no chapter PDF linked, disable the button-->
                   Download
                 </button>
               </a>
             </td>
             <td>
-              <button
-                class="btn btn-outline-primary"
-                id="buttonStyle"
-                @click="openSermon(chapter.sermon)"
-                :disabled="chapter.sermon == ''"
-              >
-                Watch
-              </button>
+              <a :href="''+chapter.sermon" target="_blank">
+                <button
+                  class="btn btn-outline-primary"
+                  id="buttonStyle"
+                  :disabled="chapter.sermon == ''"
+                ><!--If there is no no chapter sermon linked, disable the button-->
+                  Watch
+                </button>
+              </a>
             </td>
           </tr>
-        </transition-group>
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
-const BASELINE = 2020;
+/*SOMETHING TO THINK ABOUT:*/
+/*B.Doyup said that he personally thinks that having the different cycles in table be different routes will be better*/
+
+
+const BASELINE = 2020; /*For YG and ELEM, there are multiple cycles. So, 2020 is our baseline (cycle1).*/
+
 export default {
-  /*path is the directly of json file*/
+  /*path is that path that determines which json file you are looking at (YG,ELEM,KIND)*/
+  /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
   props: ["path", "showYear"],
+
   data() {
     return {
-      baseYear: this.showYear,
-      currentChaptersOfCycle: [],
+      baseYear: this.showYear, /*this.showYear always starts off in the present and current year. BaseYear saves that information*/
+      currentChaptersOfCycle: [], /**/
       currentMonth: 0,
       currentDay: 0,
       color: "",
-      cycles: [],
+      cycles: [], /*Used to hold data from array in jsonData*/
     };
   },
+
   mounted() {
-    /*Dynamically getting json file*/
+    /*Dynamically getting json file data*/
     this.cycles = require("../../data/" + this.path + ".json");
-    this.currentChaptersOfCycle = this.addDates(this.baseYear);
-    this.addDates(this.baseYear);
+    this.currentChaptersOfCycle = this.addDates(this.baseYear); /*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
+    //this.addDates(this.baseYear); /*This was in code when B.Doyup wrote it, but I don't think we need it since we call it above?*/
     this.formatDate();
   },
+
   computed: {
     currentCycle() {
-      // const BASELINE = 2020;
+      /*This method used 2020, the baseline, and calculates what cycle any other given year will fall into*/
+      /*For example, 2020-cycle1, 2021-cycle2, 2022-cycle3*/
+      /*NOTE: Though we are using cycle 1,2, and 3, the index is 0,1, and 2.*/
       return (
         (this.showYear - (BASELINE % this.cycles.length)) % this.cycles.length
       );
     },
   },
+
   methods: {
-    openSermon(vid) {
-      window.open(vid);
-    },
+
     formatDate() {
+      /*Used to calculate the current month and day for this year*/
+      /*This data is later used to determine all the chapters that have passed for the present year*/
       let temp = new Date().toISOString().slice(0, 10);
       let temp2 = temp.toString().substring(5, temp.length);
       let temp3 = temp2.replace("-", "/");
       this.currentMonth = parseInt(temp3.substring(0, 2));
       this.currentDay = parseInt(temp3.substring(3, temp3.length));
     },
+
     addDates(year) {
+      /*This method, for a given year, will create a temp array that stores all the sundays for that given year.*/
+      /*Once that temp array is populated, it is used to fill our json data with the correct dates*/
+
+      /*QUESTION: Should this method go into computed?*/
+      /*TO-DO: Figure out what to do for years with 53 chapters.*/
       const sundaysOfYear = this.getSundaysByYear(year);
-      // for (let i = 0; i < sundaysOfYear.length; i++) {
-      //   this.cycles[this.currentCycle][i].date = sundaysOfYear[i];
-      // }
-      // if (sundaysOfYear.length < 53) {
-      //   this.cycles[this.currentCycle].splice(52, 1);
-      // }
       return this.cycles[this.currentCycle].map((chapter, index) => {
         chapter.date = sundaysOfYear[index];
         return chapter;
       });
     },
+
     getSundaysByYear(year) {
       /*Method used to create an array that returns every sunday in year for a given year*/
       var date = new Date(year, 0, 1);
@@ -118,9 +128,13 @@ export default {
       }
       return days; /*Array of sundays for the year*/
     },
+
   },
+
   watch: {
     showYear(val) {
+      /*When the dropdown is clicked in YG and ELEM pages, this will change this.showYear (year you want to see)*/
+      /*When it is changed, change the what you see on the table.*/
       this.currentChaptersOfCycle = this.addDates(val);
     },
   },
@@ -128,27 +142,22 @@ export default {
 </script>
 
 <style>
-.mode-fade-enter-active,
-.mode-fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-.mode-fade-enter-from,
-.mode-fade-leave-to {
-  opacity: 0;
-}
 #buttonStyle:disabled {
   border-color: grey;
   color: grey;
 }
+
 #table-container {
   background-color: white;
   margin-top: 2%;
   border: 1px solid black;
 }
+
 #buttonStyle {
   border-color: #005595;
   color: #005595;
 }
+
 #buttonStyle:hover {
   background-color: #005595;
   color: white;
