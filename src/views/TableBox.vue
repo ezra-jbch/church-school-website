@@ -1,17 +1,19 @@
 <template>
-  <div id="table-container">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <!--Columns for the table-->
-          <th style="width: 5%" scope="col">Date</th>
-          <th style="width: 5%" scope="col">Chapter</th>
-          <th style="width: 20%" scope="col">Title</th>
-          <th style="width: 5%" scope="col">PDF</th>
-          <th style="width: 5%" scope="col">Sermon</th>
-        </tr>
-      </thead>
-      <tbody style="text-align: center; vertical-align: middle">
+  <div class="lesson-table-padding">
+    <h1>{{this.title2}}</h1>
+    <div id="table-container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!--Columns for the table-->
+            <th style="width: 5%" scope="col">Date</th>
+            <th style="width: 5%" scope="col">Chapter</th>
+            <th style="width: 20%" scope="col">Title</th>
+            <th style="width: 5%" scope="col">PDF</th>
+            <th style="width: 5%" scope="col">Sermon</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle">
           <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
           <tr v-for="chapter in this.currentChaptersOfCycle" :key="chapter">
             <td>{{ chapter.date }}</td>
@@ -30,53 +32,71 @@
               </a>
             </td>
             <td>
-              <a :href="''+chapter.sermon" target="_blank">
+              <a :href="'' + chapter.sermon" target="_blank">
                 <button
                   class="btn btn-outline-primary"
                   id="buttonStyle"
                   :disabled="chapter.sermon == ''"
-                ><!--If there is no no chapter sermon linked, disable the button-->
+                >
+                  <!--If there is no no chapter sermon linked, disable the button-->
                   Watch
                 </button>
               </a>
             </td>
           </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-/*SOMETHING TO THINK ABOUT:*/
-/*B.Doyup said that he personally thinks that having the different cycles in table be different routes will be better*/
-
 
 const BASELINE = 2020; /*For YG and ELEM, there are multiple cycles. So, 2020 is our baseline (cycle1).*/
 
 export default {
-  /*path is that path that determines which json file you are looking at (YG,ELEM,KIND)*/
+  /*pathToJson is that pathToJson that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
-  props: ["path", "showYear"],
+  /*Title changes the header on top of the page to indicate correct class (YG,ELEM, KIND)*/
+  props: ["pathToJson", "showYear", "title"],
 
   data() {
     return {
-      baseYear: this.showYear, /*this.showYear always starts off in the present and current year. BaseYear saves that information*/
-      currentChaptersOfCycle: [], /**/
+      /*this.showYear always starts off in the present and current year. BaseYear saves that information*/
+      baseYear: this.showYear,
+      currentChaptersOfCycle: [] /**/,
       currentMonth: 0,
       currentDay: 0,
       color: "",
-      cycles: [], /*Used to hold data from array in jsonData*/
+      path: this.pathToJson,
+      title2: this.title,
+      cycles: [] /*Used to hold data from array in jsonData*/,
     };
   },
-
   mounted() {
+    /*This if statement is used to load the data when the user does not load from the HOME page*/
+    /*App.vue is what sets the path to the JSON file after you press the dropdown. But that would be null if they laod straight into a class (YG,ELEM, KIND)*/
+    if (this.path == null) { 
+      if (this.$route.path == "/Kindergarten") {
+        this.path = "Kindergarten";
+        this.title2 = "Kindergarten";
+      }
+      if (this.$route.path == "/Elementary") {
+        this.path = "Elementary";
+        this.title2 = "Elementary";
+      }
+      if (this.$route.path == "/YouthGroup") {
+        this.path = "YouthGroup";
+        this.title2 = "Youth Group";
+      }
+    }
     /*Dynamically getting json file data*/
     this.cycles = require("../../data/" + this.path + ".json");
-    this.currentChaptersOfCycle = this.addDates(this.baseYear); /*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
-    //this.addDates(this.baseYear); /*This was in code when B.Doyup wrote it, but I don't think we need it since we call it above?*/
+    this.currentChaptersOfCycle = this.addDates(
+      this.baseYear
+    ); /*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
     this.formatDate();
   },
-
   computed: {
     currentCycle() {
       /*This method used 2020, the baseline, and calculates what cycle any other given year will fall into*/
@@ -128,7 +148,6 @@ export default {
       }
       return days; /*Array of sundays for the year*/
     },
-
   },
 
   watch: {
@@ -137,6 +156,15 @@ export default {
       /*When it is changed, change the what you see on the table.*/
       this.currentChaptersOfCycle = this.addDates(val);
     },
+    pathToJson(val) {
+      /*Watch to see if JSON import changes*/
+      this.cycles = require("../../data/" + val + ".json");
+      this.currentChaptersOfCycle = this.addDates(this.baseYear);
+    },
+    title(val){
+      /*Watch to see if the title changes*/
+      this.title2 = val;
+    }
   },
 };
 </script>

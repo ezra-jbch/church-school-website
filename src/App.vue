@@ -1,61 +1,63 @@
 <template>
-  <div v-if="showLogin">
-    <!--v-if used to show login component-->
-    <Login @notLogin="notVisible" />
-    <!--Login component. Button for Login on Header.-->
-  </div>
-  <div v-else>
-    <!--If login component is invisible, show other components-->
-    <Header @seeLogin="isVisible" />
-    <div class="d-flex justify-content-start">
-      <div id="navBar">
-        <Dropdown :pages="pageArray" />
-      </div>
+  <Header />
+  <div class="d-flex justify-content-start">
+    <div id="navBar">
+      <Dropdown :pages="pageArray" @change="getRouteforTableBox" />
     </div>
-    <div class="container">
-      <div class="row">
-        <router-view v-slot="{ Component }">
-          <!--This is how you do transitions between routes-->
-          <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
-          <transition name="route" mode="out-in">
-            <component :is="Component" ></component>
-          </transition>
-        </router-view>
-      </div>
-    </div>
-    <br><Footer />
   </div>
+  <div class="container">
+    <div class="row">
+      <router-view v-slot="{ Component }">
+        <!--This is how you do transitions between routes-->
+        <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
+        <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
+        <transition name="route" mode="out-in">
+          <component
+            :is="Component"
+            :pathToJson="pathToJson"
+            :showYear="showYear"
+            :title="title"
+          />
+        </transition>
+      </router-view>
+    </div>
+  </div>
+  <br /><Footer />
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Dropdown from "./components/Dropdown.vue";
-import Login from "./components/Login.vue";
 
 export default {
-  components: { Header, Footer, Dropdown, Login },
+  components: { Header, Footer, Dropdown },
   data() {
     return {
       /*This array is used to transition between pages*/
       pageArray: [
         { page: "Kindergarten", route: "Kindergarten" },
         { page: "Elementary", route: "Elementary" },
-        { page: "Youth Group", route: "Youth-Group" },
+        { page: "Youth Group", route: "YouthGroup" },
       ],
-      showLogin: false,
+      pathToJson: null,
+      showYear: new Date().getFullYear() /*Current Year*/,
+      title: "",
     };
   },
 
   methods: {
-    isVisible() {
-      this.showLogin = true;
-      /*console.log(this.showLogin);*/
-    },
-
-    notVisible() {
-      this.showLogin = false;
-      /*console.log(this.showLogin);*/
+    getRouteforTableBox(route) {
+      this.pathToJson = route;
+      if (this.pathToJson == "Kindergarten") {
+        this.title = "Kindergarten";
+      }
+      if (this.pathToJson == "Elementary") {
+        this.title = "Elementary";
+      }
+      if (this.pathToJson == "YouthGroup") {
+        this.title = "Youth Group";
+      }
     },
   },
 };

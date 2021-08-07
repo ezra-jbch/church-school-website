@@ -19,7 +19,9 @@
     <div class="dropdown-content" style="left: 0">
       <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
       <div v-for="page in pages" :key="page" class="link-block">
-        <router-link :to="page.route">{{ page.page }}</router-link>
+        <!--Dropdown determines which route you go to-->
+        <!--Dynamically changing route between KIND, ELEM, and YG-->
+        <router-link :to="page.route" @click="getRouteforTableBox(page.route)">{{ page.page }}</router-link>
       </div>
     </div>
   </div>
@@ -28,6 +30,19 @@
 <script>
 export default {
   props: ["pages"], /*Pages is an array of pages that the routes can transition to*/
+
+  data(){
+    return{
+    }
+  },
+  methods:{
+    getRouteforTableBox(route) {
+      /*This method gets the route of the page (same name as the JSON files in Data folder), and passes it back to parent class*/
+      /*This route is used by the parent to determine which class (YG,ELEM,KIND) to display in TableBox*/
+      this.$emit('change', route);
+    },
+  }
+
 };
 </script>
 
