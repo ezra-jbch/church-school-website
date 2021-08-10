@@ -1,6 +1,6 @@
 <template>
   <div class="lesson-table-padding">
-    <h1>{{this.title2}}</h1>
+    <h1>{{this.mapOfJson[this.pathToJson]}}</h1>
     <div id="table-container">
       <table class="table table-hover">
         <thead>
@@ -58,43 +58,21 @@ export default {
   /*pathToJson is that pathToJson that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
   /*Title changes the header on top of the page to indicate correct class (YG,ELEM, KIND)*/
-  props: ["pathToJson", "showYear", "title"],
+  props: ["pathToJson", "showYear", "mapOfJson"],
 
   data() {
     return {
-      /*this.showYear always starts off in the present and current year. BaseYear saves that information*/
-      baseYear: this.showYear,
-      currentChaptersOfCycle: [] /**/,
       currentMonth: 0,
       currentDay: 0,
       color: "",
-      path: this.pathToJson,
-      title2: this.title,
-      cycles: [] /*Used to hold data from array in jsonData*/,
     };
   },
   mounted() {
     /*This if statement is used to load the data when the user does not load from the HOME page*/
     /*App.vue is what sets the path to the JSON file after you press the dropdown. But that would be null if they laod straight into a class (YG,ELEM, KIND)*/
-    if (this.path == null) { 
-      if (this.$route.path == "/Kindergarten") {
-        this.path = "Kindergarten";
-        this.title2 = "Kindergarten";
-      }
-      if (this.$route.path == "/Elementary") {
-        this.path = "Elementary";
-        this.title2 = "Elementary";
-      }
-      if (this.$route.path == "/YouthGroup") {
-        this.path = "YouthGroup";
-        this.title2 = "Youth Group";
-      }
-    }
     /*Dynamically getting json file data*/
-    this.cycles = require("../../data/" + this.path + ".json");
-    this.currentChaptersOfCycle = this.addDates(
-      this.baseYear
-    ); /*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
+    /*this.cycles = this.setCycles;*/
+    this.currentChaptersOfCycle;/*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
     this.formatDate();
   },
   computed: {
@@ -105,6 +83,12 @@ export default {
       return (
         (this.showYear - (BASELINE % this.cycles.length)) % this.cycles.length
       );
+    },
+    currentChaptersOfCycle(){
+      return this.addDates(this.showYear);
+    },
+    cycles(){
+      return require("../data/" + this.pathToJson + ".json");
     },
   },
 
@@ -148,23 +132,6 @@ export default {
       }
       return days; /*Array of sundays for the year*/
     },
-  },
-
-  watch: {
-    showYear(val) {
-      /*When the dropdown is clicked in YG and ELEM pages, this will change this.showYear (year you want to see)*/
-      /*When it is changed, change the what you see on the table.*/
-      this.currentChaptersOfCycle = this.addDates(val);
-    },
-    pathToJson(val) {
-      /*Watch to see if JSON import changes*/
-      this.cycles = require("../../data/" + val + ".json");
-      this.currentChaptersOfCycle = this.addDates(this.baseYear);
-    },
-    title(val){
-      /*Watch to see if the title changes*/
-      this.title2 = val;
-    }
   },
 };
 </script>

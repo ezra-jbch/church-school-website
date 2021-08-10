@@ -12,12 +12,7 @@
         <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
         <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
         <transition name="route" mode="out-in">
-          <component
-            :is="Component"
-            :pathToJson="pathToJson"
-            :showYear="showYear"
-            :title="title"
-          />
+          <component :is="Component" :showYear="showYear"/>
         </transition>
       </router-view>
     </div>
@@ -29,35 +24,31 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Dropdown from "./components/Dropdown.vue";
+import { GROUP_TITLE_PER_ROUTE } from "./data/constants.js";
 
 export default {
   components: { Header, Footer, Dropdown },
   data() {
     return {
       /*This array is used to transition between pages*/
-      pageArray: [
-        { page: "Kindergarten", route: "Kindergarten" },
-        { page: "Elementary", route: "Elementary" },
-        { page: "Youth Group", route: "YouthGroup" },
-      ],
+      pageArray: [],
       pathToJson: null,
       showYear: new Date().getFullYear() /*Current Year*/,
       title: "",
     };
   },
-
+  mounted() {
+    this.setPageArray();
+  },
   methods: {
+    setPageArray() {
+      for(const x in GROUP_TITLE_PER_ROUTE ){
+        this.pageArray.push({page:GROUP_TITLE_PER_ROUTE[x], route:x });
+      }
+    },
     getRouteforTableBox(route) {
       this.pathToJson = route;
-      if (this.pathToJson == "Kindergarten") {
-        this.title = "Kindergarten";
-      }
-      if (this.pathToJson == "Elementary") {
-        this.title = "Elementary";
-      }
-      if (this.pathToJson == "YouthGroup") {
-        this.title = "Youth Group";
-      }
+      const page = this.pageArray.find((page) => page.route === route);
     },
   },
 };

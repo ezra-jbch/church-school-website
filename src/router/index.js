@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import ContactUs from '../views/ContactUs.vue'
 import TableBox from '../views/TableBox.vue'
+import { GROUP_TITLE_PER_ROUTE } from "../data/constants.js";
 
 const routes = [
   {
@@ -24,8 +25,9 @@ const routes = [
   },
   {
     /*Dynamic file path. Look at Dropdown Component to see how route is dynamically being passed in*/
-    path: '/:route', /*Possible Routes: YG, ELEM, and KIND pages*/
-    component: TableBox
+    path: '/:group', /*Possible Routes: YG, ELEM, and KIND pages*/
+    component: TableBox,
+    props: route => ({pathToJson: route.params.group, mapOfJson: GROUP_TITLE_PER_ROUTE})
   },
 ]
 
