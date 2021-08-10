@@ -1,6 +1,28 @@
 <template>
   <div class="lesson-table-padding">
-    <h1>{{ this.mapOfJson["/lessons/" + this.pathToJson] }}</h1>
+    <div class="alignButtonAndTitle">
+      <!--Used to align button and title-->
+      <h1>{{ this.mapOfJson["/lessons/" + this.pathToJson] }}</h1>
+      <div class="btn-group" v-if="this.cycles.length > 1">
+        <!--Disables dropdown for KIND because they only have 1 cycle-->
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          style="background-color: #005595; border-color: #005595"
+        >
+          {{ this.showYear }}
+        </button>
+        <ul class="dropdown-menu" style="cursor: pointer">
+          <li v-for="(item, index) in this.cycles" :key="index">
+            <a class="dropdown-item" @click="changeYear(index)">{{
+              changeDatesOnDropdown(index)
+            }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div id="table-container">
       <table class="table table-hover">
         <thead>
@@ -15,7 +37,11 @@
         </thead>
         <tbody style="text-align: center; vertical-align: middle">
           <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
-          <tr v-for="chapter in this.currentChaptersOfCycle" :key="chapter">
+          <tr
+            v-for="chapter in this.currentChaptersOfCycle"
+            :key="chapter"
+          >
+          <!-- Put with tr above: v-bind:style="{ 'background-color': changeColor(chapter.date) }" -->
             <td>{{ chapter.date }}</td>
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
@@ -29,8 +55,8 @@
                   <!--If there is no no chapter PDF linked, disable the button-->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="25"
+                    height="25"
                     fill="currentColor"
                     class="bi bi-download"
                     viewBox="0 0 16 16"
@@ -55,8 +81,8 @@
                   <!--If there is no no chapter sermon linked, disable the button-->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="25"
+                    height="25"
                     fill="currentColor"
                     class="bi bi-play-btn"
                     viewBox="0 0 16 16"
@@ -85,13 +111,14 @@ export default {
   /*pathToJson is that pathToJson that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
   /*Title changes the header on top of the page to indicate correct class (YG,ELEM, KIND)*/
-  props: ["pathToJson", "showYear", "mapOfJson"],
+  props: ["pathToJson", "mapOfJson"],
 
   data() {
     return {
+      showYear: new Date().getFullYear() /*Current Year*/,
+      dropDownYear: new Date().getFullYear(),
       currentMonth: 0,
       currentDay: 0,
-      color: "",
     };
   },
   mounted() {
@@ -121,14 +148,54 @@ export default {
   },
 
   methods: {
+    // changeColor(date) {
+    //   console.log(this.pathToJson + ": This is running");
+    //   if (this.dropDownYear == this.showYear) {
+    //     const dateMonth = parseInt(date.substring(0, 2));
+    //     const dateDay = parseInt(date.substring(3, date.length));
+    //     if (dateMonth < this.currentMonth) {
+    //       return "#e8f4f8";
+    //     } else if (dateMonth == this.currentMonth && dateDay < this.currentDay) {
+    //       return "#e8f4f8";
+    //     }
+    //   }
+    // },
+    changeDatesOnDropdown(index) {
+      if (index == 0) {
+        return this.dropDownYear - 1;
+      }
+      if (index == 1) {
+        return this.dropDownYear;
+      }
+      if (index == 2) {
+        return this.dropDownYear + 1;
+      }
+    },
+    changeYear(index) {
+      if (index == 0) {
+        this.showYear = this.dropDownYear - 1;
+      }
+      if (index == 1) {
+        this.showYear = this.dropDownYear;
+      }
+      if (index == 2) {
+        this.showYear = this.dropDownYear + 1;
+      }
+    },
     formatDate() {
       /*Used to calculate the current month and day for this year*/
-      /*This data is later used to determine all the chapters that have passed for the present year*/
-      let temp = new Date().toISOString().slice(0, 10);
-      let temp2 = temp.toString().substring(5, temp.length);
-      let temp3 = temp2.replace("-", "/");
-      this.currentMonth = parseInt(temp3.substring(0, 2));
-      this.currentDay = parseInt(temp3.substring(3, temp3.length));
+      /*This data is later used to determine all the chapters that have passed (been used) for the present year*/
+      const temp = new Date()
+        .toISOString()
+        .slice(0, 10); /*Returns date in 2021-08-10 format*/
+      let monthAndDaytemp = temp
+        .toString()
+        .substring(5, temp.length); /*substring to get month and day only*/
+      let monthAndDayfinal = monthAndDaytemp.replace("-", "/");
+      this.currentMonth = parseInt(monthAndDayfinal.substring(0, 2));
+      this.currentDay = parseInt(
+        monthAndDayfinal.substring(3, monthAndDayfinal.length)
+      );
     },
 
     addDates(year) {
@@ -146,7 +213,7 @@ export default {
 
     getSundaysByYear(year) {
       /*Method used to create an array that returns every sunday in year for a given year*/
-      var date = new Date(year, 0, 1);
+      const date = new Date(year, 0, 1);
       while (date.getDay() != 0) {
         date.setDate(date.getDate() + 1);
       }
@@ -164,6 +231,11 @@ export default {
 </script>
 
 <style>
+.alignButtonAndTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #buttonStyle:disabled {
   border-color: grey;
   color: grey;

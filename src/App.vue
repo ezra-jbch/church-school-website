@@ -12,7 +12,7 @@
         <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
         <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
         <transition name="route" mode="out-in">
-          <component :is="Component" :showYear="showYear"/>
+          <component :is="Component"/>
         </transition>
       </router-view>
     </div>
@@ -32,9 +32,6 @@ export default {
     return {
       /*This array is used to transition between pages*/
       pageArray: [],
-      pathToJson: null,
-      showYear: new Date().getFullYear() /*Current Year*/,
-      title: "",
     };
   },
   mounted() {
