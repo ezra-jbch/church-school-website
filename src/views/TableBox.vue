@@ -1,16 +1,16 @@
 <template>
   <div class="lesson-table-padding">
-    <h1>{{this.mapOfJson[this.pathToJson]}}</h1>
+    <h1>{{ this.mapOfJson["/lessons/" + this.pathToJson] }}</h1>
     <div id="table-container">
       <table class="table table-hover">
         <thead>
           <tr>
             <!--Columns for the table-->
-            <th style="width: 5%" scope="col">Date</th>
-            <th style="width: 5%" scope="col">Chapter</th>
-            <th style="width: 20%" scope="col">Title</th>
-            <th style="width: 5%" scope="col">PDF</th>
-            <th style="width: 5%" scope="col">Sermon</th>
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 10%" scope="col">Chapter</th>
+            <th style="width: 60%" scope="col">Title</th>
+            <th style="width: 10%" scope="col">PDF</th>
+            <th style="width: 10%" scope="col">Sermon</th>
           </tr>
         </thead>
         <tbody style="text-align: center; vertical-align: middle">
@@ -20,14 +20,28 @@
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
             <td>
-              <a :href="'./2021 True Light/' + chapter.pdf" target="_blank">
+              <a :href="'../2021 True Light/' + chapter.pdf" target="_blank">
                 <button
                   class="btn btn-outline-primary"
                   id="buttonStyle"
                   :disabled="chapter.pdf == ''"
                 >
                   <!--If there is no no chapter PDF linked, disable the button-->
-                  Download
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-download"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                    />
+                    <path
+                      d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                    />
+                  </svg>
                 </button>
               </a>
             </td>
@@ -39,7 +53,21 @@
                   :disabled="chapter.sermon == ''"
                 >
                   <!--If there is no no chapter sermon linked, disable the button-->
-                  Watch
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-play-btn"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
+                    />
+                    <path
+                      d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
+                    />
+                  </svg>
                 </button>
               </a>
             </td>
@@ -51,7 +79,6 @@
 </template>
 
 <script>
-
 const BASELINE = 2020; /*For YG and ELEM, there are multiple cycles. So, 2020 is our baseline (cycle1).*/
 
 export default {
@@ -72,7 +99,8 @@ export default {
     /*App.vue is what sets the path to the JSON file after you press the dropdown. But that would be null if they laod straight into a class (YG,ELEM, KIND)*/
     /*Dynamically getting json file data*/
     /*this.cycles = this.setCycles;*/
-    this.currentChaptersOfCycle;/*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
+    this
+      .currentChaptersOfCycle; /*Returns an array with the json data organized with correct dates (sundays for year are calculated and stored into array)*/
     this.formatDate();
   },
   computed: {
@@ -84,16 +112,15 @@ export default {
         (this.showYear - (BASELINE % this.cycles.length)) % this.cycles.length
       );
     },
-    currentChaptersOfCycle(){
+    currentChaptersOfCycle() {
       return this.addDates(this.showYear);
     },
-    cycles(){
+    cycles() {
       return require("../data/" + this.pathToJson + ".json");
     },
   },
 
   methods: {
-
     formatDate() {
       /*Used to calculate the current month and day for this year*/
       /*This data is later used to determine all the chapters that have passed for the present year*/
