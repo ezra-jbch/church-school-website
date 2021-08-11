@@ -1,30 +1,32 @@
 <template>
-  <Header />
-  <div class="d-flex justify-content-start">
-    <div id="navBar">
-      <Dropdown :pages="pageArray" @change="getRouteforTableBox" />
+  <div class="background-img">
+    <Header />
+    <div class="d-flex justify-content-start">
+      <div id="navBar">
+        <Dropdown :pages="pageArray" />
+      </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <router-view v-slot="{ Component }">
-        <!--This is how you do transitions between routes-->
-        <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
-        <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
-        <transition name="route" mode="out-in">
-          <component :is="Component"/>
-        </transition>
-      </router-view>
+    <div class="container">
+      <div class="row">
+        <router-view v-slot="{ Component }">
+          <!--This is how you do transitions between routes-->
+          <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
+          <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
+          <transition name="route" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
     </div>
+    <br /><Footer />
   </div>
-  <br /><Footer />
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Dropdown from "./components/Dropdown.vue";
-import { GROUP_TITLE_PER_ROUTE } from "./data/constants.js";
+import { GROUP_TITLE_PER_ROUTE } from "./data/constants.js"; /*Constant file with names and paths for dropdown*/
 
 export default {
   components: { Header, Footer, Dropdown },
@@ -39,13 +41,10 @@ export default {
   },
   methods: {
     setPageArray() {
-      for(const x in GROUP_TITLE_PER_ROUTE ){
-        this.pageArray.push({page:GROUP_TITLE_PER_ROUTE[x], route:x });
+      /*Populating pageArray with page titles and routes. pageArray is sent as a prop to Dropdown component*/
+      for (const x in GROUP_TITLE_PER_ROUTE) {
+        this.pageArray.push({ page: GROUP_TITLE_PER_ROUTE[x], route: '/lessons/' + x + '?year=' + new Date().getFullYear()});
       }
-    },
-    getRouteforTableBox(route) {
-      this.pathToJson = route;
-      const page = this.pageArray.find((page) => page.route === route);
     },
   },
 };
@@ -92,5 +91,12 @@ body {
 
 .route-leave-active {
   transition: all 0.2s ease-out;
+}
+.background-img {
+  background-image: url("./assets/youth-group.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

@@ -21,7 +21,7 @@
       <div v-for="page in pages" :key="page" class="link-block">
         <!--Dropdown determines which route you go to-->
         <!--Dynamically changing route between KIND, ELEM, and YG-->
-        <router-link :to="page.route" @click="getRouteforTableBox(page.route)">{{ page.page }}</router-link>
+        <router-link :to="page.route">{{ page.page }}</router-link>
       </div>
     </div>
   </div>
@@ -35,14 +35,6 @@ export default {
     return{
     }
   },
-  methods:{
-    getRouteforTableBox(route) {
-      /*This method gets the route of the page (same name as the JSON files in Data folder), and passes it back to parent class*/
-      /*This route is used by the parent to determine which class (YG,ELEM,KIND) to display in TableBox*/
-      this.$emit('change', route);
-    },
-  }
-
 };
 </script>
 

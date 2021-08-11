@@ -2,7 +2,7 @@
   <div class="lesson-table-padding">
     <div class="alignButtonAndTitle">
       <!--Used to align button and title-->
-      <h1>{{ this.mapOfJson["/lessons/" + this.pathToJson] }}</h1>
+      <h1>{{ this.mapOfJson[this.pathToJson] }}</h1>
       <div class="btn-group" v-if="this.cycles.length > 1">
         <!--Disables dropdown for KIND because they only have 1 cycle-->
         <button
@@ -12,13 +12,11 @@
           aria-expanded="false"
           style="background-color: #005595; border-color: #005595"
         >
-          {{ this.showYear }}
+          {{ this.showYear }} 
         </button>
         <ul class="dropdown-menu" style="cursor: pointer">
           <li v-for="(item, index) in this.cycles" :key="index">
-            <a class="dropdown-item" @click="changeYear(index)">{{
-              changeDatesOnDropdown(index)
-            }}</a>
+            <a class="dropdown-item">{{changeDatesOnDropdown(index)}}</a>
           </li>
         </ul>
       </div>
@@ -37,11 +35,7 @@
         </thead>
         <tbody style="text-align: center; vertical-align: middle">
           <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
-          <tr
-            v-for="chapter in this.currentChaptersOfCycle"
-            :key="chapter"
-          >
-          <!-- Put with tr above: v-bind:style="{ 'background-color': changeColor(chapter.date) }" -->
+          <tr v-for="chapter in this.currentChaptersOfCycle" :key="chapter" :style="{ 'background-color': changeColor(chapter.date) }">
             <td>{{ chapter.date }}</td>
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
@@ -111,11 +105,10 @@ export default {
   /*pathToJson is that pathToJson that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
   /*Title changes the header on top of the page to indicate correct class (YG,ELEM, KIND)*/
-  props: ["pathToJson", "mapOfJson"],
+  props: ["pathToJson", "mapOfJson","showYear"],
 
   data() {
     return {
-      showYear: new Date().getFullYear() /*Current Year*/,
       dropDownYear: new Date().getFullYear(),
       currentMonth: 0,
       currentDay: 0,
@@ -140,26 +133,29 @@ export default {
       );
     },
     currentChaptersOfCycle() {
+      /*Populate all the dates of the year (sundays) for that given cycle*/
       return this.addDates(this.showYear);
     },
     cycles() {
+      /*Get the json file*/
       return require("../data/" + this.pathToJson + ".json");
     },
   },
 
   methods: {
-    // changeColor(date) {
-    //   console.log(this.pathToJson + ": This is running");
-    //   if (this.dropDownYear == this.showYear) {
-    //     const dateMonth = parseInt(date.substring(0, 2));
-    //     const dateDay = parseInt(date.substring(3, date.length));
-    //     if (dateMonth < this.currentMonth) {
-    //       return "#e8f4f8";
-    //     } else if (dateMonth == this.currentMonth && dateDay < this.currentDay) {
-    //       return "#e8f4f8";
-    //     }
-    //   }
-    // },
+    changeColor(date) {
+      /*This method is used as a way to change the color of the row of the TableBox if the date has passed*/
+      /*ISSUE: Not sure why, but when this is first called, it runs twice...*/
+      if (this.dropDownYear == this.showYear) {
+        const dateMonth = parseInt(date.substring(0, 2));
+        const dateDay = parseInt(date.substring(3, date.length));
+        if (dateMonth < this.currentMonth) {
+          return "#afdefe";
+        } else if (dateMonth == this.currentMonth && dateDay < this.currentDay) {
+          return "#afdefe";
+        }
+      }
+    },
     changeDatesOnDropdown(index) {
       if (index == 0) {
         return this.dropDownYear - 1;
@@ -169,17 +165,6 @@ export default {
       }
       if (index == 2) {
         return this.dropDownYear + 1;
-      }
-    },
-    changeYear(index) {
-      if (index == 0) {
-        this.showYear = this.dropDownYear - 1;
-      }
-      if (index == 1) {
-        this.showYear = this.dropDownYear;
-      }
-      if (index == 2) {
-        this.showYear = this.dropDownYear + 1;
       }
     },
     formatDate() {
