@@ -26,6 +26,7 @@ const routes = [
   {
     /*Dynamic file path. Look at Dropdown Component to see how route is dynamically being passed in*/
     path: '/lessons/:group', /*Possible Routes: YG, ELEM, and KIND pages*/
+    name: 'TableBox',
     component: TableBox,
     props: route => ({pathToJson: route.params.group, mapOfJson: GROUP_TITLE_PER_ROUTE, showYear: route.query.year})
     /*showYear: route.query.year*/

@@ -12,11 +12,11 @@
           aria-expanded="false"
           style="background-color: #005595; border-color: #005595"
         >
-          {{ this.showYear }} 
+          {{ this.showYear}} 
         </button>
         <ul class="dropdown-menu" style="cursor: pointer">
           <li v-for="(item, index) in this.cycles" :key="index">
-            <a class="dropdown-item">{{changeDatesOnDropdown(index)}}</a>
+            <router-link class="dropdown-item" :to="{name: 'TableBox', params: {group: this.pathToJson}, query: {year: yearsShownOnDropdown(index)}}">{{yearsShownOnDropdown(index)}}</router-link>
           </li>
         </ul>
       </div>
@@ -109,7 +109,8 @@ export default {
 
   data() {
     return {
-      dropDownYear: new Date().getFullYear(),
+      dropDownYear: parseInt(this.showYear),
+      changeYear: 0,
       currentMonth: 0,
       currentDay: 0,
     };
@@ -146,7 +147,7 @@ export default {
     changeColor(date) {
       /*This method is used as a way to change the color of the row of the TableBox if the date has passed*/
       /*ISSUE: Not sure why, but when this is first called, it runs twice...*/
-      if (this.dropDownYear == this.showYear) {
+      if (new Date().getFullYear() == this.showYear) {
         const dateMonth = parseInt(date.substring(0, 2));
         const dateDay = parseInt(date.substring(3, date.length));
         if (dateMonth < this.currentMonth) {
@@ -156,7 +157,7 @@ export default {
         }
       }
     },
-    changeDatesOnDropdown(index) {
+    yearsShownOnDropdown(index) {
       if (index == 0) {
         return this.dropDownYear - 1;
       }
