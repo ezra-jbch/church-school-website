@@ -29,11 +29,12 @@
 
 <script>
 export default {
-  props: ["pages"], /*Pages is an array of pages that the routes can transition to*/
+  props: [
+    "pages",
+  ] /*Pages is an array of pages that the routes can transition to*/,
 
-  data(){
-    return{
-    }
+  data() {
+    return {};
   },
 };
 </script>

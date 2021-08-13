@@ -12,11 +12,19 @@
           aria-expanded="false"
           style="background-color: #005595; border-color: #005595"
         >
-          {{ this.showYear}} 
+          {{ this.showYear }}
         </button>
         <ul class="dropdown-menu" style="cursor: pointer">
           <li v-for="(item, index) in this.cycles" :key="index">
-            <router-link class="dropdown-item" :to="{name: 'TableBox', params: {group: this.pathToJson}, query: {year: yearsShownOnDropdown(index)}}">{{yearsShownOnDropdown(index)}}</router-link>
+            <router-link
+              class="dropdown-item"
+              :to="{
+                name: 'TableBox',
+                params: { group: this.pathToJson },
+                query: { year: yearsShownOnDropdown(index) },
+              }"
+              >{{ yearsShownOnDropdown(index) }}</router-link
+            >
           </li>
         </ul>
       </div>
@@ -35,7 +43,11 @@
         </thead>
         <tbody style="text-align: center; vertical-align: middle">
           <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
-          <tr v-for="chapter in this.currentChaptersOfCycle" :key="chapter" :style="{ 'background-color': changeColor(chapter.date) }">
+          <tr
+            v-for="chapter in this.currentChaptersOfCycle"
+            :key="chapter"
+            :style="{ 'background-color': changeColor(chapter.date) }"
+          >
             <td>{{ chapter.date }}</td>
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
@@ -66,7 +78,7 @@
               </a>
             </td>
             <td>
-              <a :href="'' + chapter.sermon" target="_blank">
+              <router-link :to="{ name: 'SermonPage', params: {sermonLink: chapter.sermon || 'empty'}}" target="_blank">
                 <button
                   class="btn btn-outline-primary"
                   id="buttonStyle"
@@ -89,7 +101,7 @@
                     />
                   </svg>
                 </button>
-              </a>
+              </router-link>
             </td>
           </tr>
         </tbody>
@@ -105,11 +117,11 @@ export default {
   /*pathToJson is that pathToJson that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*showYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
   /*Title changes the header on top of the page to indicate correct class (YG,ELEM, KIND)*/
-  props: ["pathToJson", "mapOfJson","showYear"],
+  props: ["pathToJson", "mapOfJson", "showYear"],
 
   data() {
     return {
-      dropDownYear: parseInt(this.showYear),
+      dropDownYear: new Date().getFullYear(),
       changeYear: 0,
       currentMonth: 0,
       currentDay: 0,
@@ -147,12 +159,15 @@ export default {
     changeColor(date) {
       /*This method is used as a way to change the color of the row of the TableBox if the date has passed*/
       /*ISSUE: Not sure why, but when this is first called, it runs twice...*/
-      if (new Date().getFullYear() == this.showYear) {
+      if (this.dropDownYear == this.showYear) {
         const dateMonth = parseInt(date.substring(0, 2));
         const dateDay = parseInt(date.substring(3, date.length));
         if (dateMonth < this.currentMonth) {
           return "#afdefe";
-        } else if (dateMonth == this.currentMonth && dateDay < this.currentDay) {
+        } else if (
+          dateMonth == this.currentMonth &&
+          dateDay < this.currentDay
+        ) {
           return "#afdefe";
         }
       }

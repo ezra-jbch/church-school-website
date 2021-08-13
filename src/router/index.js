@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import ContactUs from '../views/ContactUs.vue'
-import TableBox from '../views/TableBox.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import ContactUs from '../views/ContactUs.vue';
+import TableBox from '../views/TableBox.vue';
 import { GROUP_TITLE_PER_ROUTE } from "../data/constants.js";
+import SermonPage from '../views/SermonPage.vue';
 
 const routes = [
   {
@@ -30,6 +31,12 @@ const routes = [
     component: TableBox,
     props: route => ({pathToJson: route.params.group, mapOfJson: GROUP_TITLE_PER_ROUTE, showYear: route.query.year})
     /*showYear: route.query.year*/
+  },
+  {
+    path:'/sermon/:sermonLink',
+    name: 'SermonPage',
+    component: SermonPage,
+    props: route => ({videoURL: route.params.sermonLink})
   },
 ]
 
