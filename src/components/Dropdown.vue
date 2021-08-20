@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown">
     <button class="dropbtn">
-      Lessons
+      {{dropDownTitle}}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -18,10 +18,9 @@
     </button>
     <div class="dropdown-content" style="left: 0">
       <!--Using props to pass in array fro App.vue, so Dropdown is more reusable-->
-      <div v-for="page in pages" :key="page" class="link-block">
+      <div v-for="item in itemsInDropdown" :key="item" class="link-block">
         <!--Dropdown determines which route you go to-->
-        <!--Dynamically changing route between KIND, ELEM, and YG-->
-        <router-link :to="page.route">{{ page.page }}</router-link>
+        <router-link :to="item.route">{{ item.page }}</router-link>
       </div>
     </div>
   </div>
@@ -29,13 +28,7 @@
 
 <script>
 export default {
-  props: [
-    "pages",
-  ] /*Pages is an array of pages that the routes can transition to*/,
-
-  data() {
-    return {};
-  },
+  props: ["itemsInDropdown","dropDownTitle"] /*itemsInDropdown is an array of itemsInDropdown that the routes can transition to*/,
 };
 </script>
 

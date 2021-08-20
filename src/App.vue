@@ -3,17 +3,17 @@
     <Header />
     <div class="d-flex justify-content-start">
       <div id="navBar">
-        <Dropdown :pages="pageArray" />
+        <Dropdown :itemsInDropdown="routesForLessonPages" :dropDownTitle="lessonTitleForDropdown"/>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <router-view v-slot="{ Component }">
-          <!--This is how you do transitions between routes-->
+        <router-view v-slot="{ Component, route }">
+          <!--This is how you do transitions between routes in Vue 3-->
           <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
-          <!--https://www.youtube.com/watch?v=X4I6zUEM40A&ab_channel=TheNetNinja-->
+          <!--Documentation: https://next.router.vuejs.org/guide/advanced/transitions.html-->
           <transition name="route" mode="out-in">
-            <component :is="Component" />
+            <component :is="Component" :key="route.path"/>
           </transition>
         </router-view>
       </div>
@@ -30,25 +30,34 @@ import { GROUP_TITLE_PER_ROUTE } from "./data/constants.js"; /*Constant file wit
 
 export default {
   components: { Header, Footer, Dropdown },
+
   data() {
     return {
-      /*This array is used to transition between pages*/
-      pageArray: [],
+      /*routesForLessonPages is used to transition between pages*/
+      routesForLessonPages: [],
+      lessonTitleForDropdown: "Lessons", /*To make dropdown more reusable, pass in title as prop that will allow for different titles.*/
     };
   },
+
   mounted() {
-    this.setPageArray();
+    this.setroutesForLessonPages();
   },
+
   methods: {
-    setPageArray() {
-      /*Populating pageArray with page titles and routes. pageArray is sent as a prop to Dropdown component*/
+    setroutesForLessonPages() {
+      /*Populating routesForLessonPages with page titles and routes. routesForLessonPages is sent as a prop to Dropdown component*/
+      /*This behavior of ordering for the array isn't guaranteed*/
       for (const x in GROUP_TITLE_PER_ROUTE) {
-        this.pageArray.push({ page: GROUP_TITLE_PER_ROUTE[x], route: '/lessons/' + x + '?year=' + new Date().getFullYear()});
+        this.routesForLessonPages.push({
+          page: GROUP_TITLE_PER_ROUTE[x],
+          route: "/lessons/" + x + "?year=" + new Date().getFullYear(),
+        });
       }
     },
   },
 };
 </script>
+
 <style>
 /*Logo hex values: Dark blue: #005595, Lighter blue: #36b4e5*/
 
@@ -92,6 +101,7 @@ body {
 .route-leave-active {
   transition: all 0.2s ease-out;
 }
+
 .background-img {
   background-image: url("./assets/youth-group.png");
   background-attachment: fixed;

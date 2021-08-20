@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import ContactUs from '../views/ContactUs.vue';
-import TableBox from '../views/TableBox.vue';
+import LessonsPage from '../views/LessonsPage.vue';
 import { GROUP_TITLE_PER_ROUTE } from "../data/constants.js";
 import SermonPage from '../views/SermonPage.vue';
 
@@ -27,16 +27,15 @@ const routes = [
   {
     /*Dynamic file path. Look at Dropdown Component to see how route is dynamically being passed in*/
     path: '/lessons/:group', /*Possible Routes: YG, ELEM, and KIND pages*/
-    name: 'TableBox',
-    component: TableBox,
-    props: route => ({pathToJson: route.params.group, mapOfJson: GROUP_TITLE_PER_ROUTE, showYear: route.query.year})
-    /*showYear: route.query.year*/
+    name: 'LessonsPage',
+    component: LessonsPage,
+    props: route => ({nameOfGroup: route.params.group, titlesForGroup: GROUP_TITLE_PER_ROUTE, selectedYear: route.query.year})
   },
   {
-    path:'/sermon/:sermonLink',
+    path:'/sermon/:group/:year/:title?',
     name: 'SermonPage',
     component: SermonPage,
-    props: route => ({videoURL: route.params.sermonLink})
+    props: route => ({group: route.params.group, year: route.params.year, title: route.params.title})
   },
 ]
 
