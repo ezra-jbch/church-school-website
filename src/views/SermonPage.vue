@@ -1,5 +1,4 @@
 <template>
-  <!--NOTE: Youtube links must have the "embed" attribute in the url for it to work properly. You get this from the "share" button on youtube.-->
   <iframe
     width="500"
     height="600"
@@ -13,6 +12,7 @@
 </template>
 
 <script>
+/* Youtube links must have the "embed" attribute in the url for it to work properly. You get this from the "share" button on youtube.*/
 export default {
   props: ["group", "year", "title"],
 
