@@ -33,8 +33,5 @@ export default {
   #router-link {
     width: 70%;
   }
-  #login {
-    font-size: 0;
-  }
 }
 </style>

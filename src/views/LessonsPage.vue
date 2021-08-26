@@ -1,5 +1,5 @@
 <template>
-  <div class="lesson-table-padding">
+  <div style="margin-top: 35px;">
     <!--Check global css file in assets folder for lesson-table-padding-->
     <div class="alignButtonAndTitle">
       <!--Used to align button and title-->
@@ -16,11 +16,18 @@
           {{ selectedYear }}
           <!--Selected year is year in query. Show that on dropdown title-->
         </button>
-        <ul class="dropdown-menu" style="cursor: pointer" id="lessonDropdownOptions">
+        <ul
+          class="dropdown-menu"
+          style="cursor: pointer"
+          id="lessonDropdownOptions"
+        >
           <li v-for="(item, index) in cycles" :key="index">
-            <a class="dropdown-item" @click="changeSelectedYear(index)" id="dropdownActive">{{
-              changeYearsOnDropdown(index)
-            }}</a>
+            <a
+              class="dropdown-item"
+              @click="changeSelectedYear(index)"
+              id="dropdownActive"
+              >{{ changeYearsOnDropdown(index) }}</a
+            >
           </li>
         </ul>
       </div>
@@ -48,7 +55,8 @@ export default {
 
   data() {
     return {
-      titlesForGroup: GROUP_TITLE_PER_ROUTE /*titlesForGroup: Comes from the constant.js file in data folder. Has the titles for each group (youth-group = Youth Group)*/,
+      titlesForGroup:
+        GROUP_TITLE_PER_ROUTE /*titlesForGroup: Comes from the constant.js file in data folder. Has the titles for each group (youth-group = Youth Group)*/,
       key: 0 /*This key is used simply as a way to transition between tables. Value of key is changed when the user presses the dropdown.*/,
       currentYear:
         new Date().getFullYear() /*get the current year in real life*/,
@@ -93,7 +101,7 @@ export default {
 </script>
 
 <style>
-#dropdownActive:active{
+#dropdownActive:active {
   background-color: #005595;
 }
 /*mode-fade is used to transition the table*/

@@ -3,9 +3,7 @@
     <!--Not sure why, comments outside of this div breaks the component...-->
     <!--Youtube links must have the "embed" attribute in the url for it to work properly. You get this from the "share" button on youtube.-->
     <iframe
-      style="margin-top: 1%"
-      width="1000"
-      height="700"
+      id="iframeCSS"
       loading="lazy"
       :src="getVideoURLForLessons()"
       title="YouTube video player"
@@ -41,8 +39,8 @@ export default {
     getVideoURLForLessons() {
       /*Given the group and title of the lesson, go through the json file and find the url for the video*/
       // console.log(this.cycles[this.currentCycle]);
-      for (let i =0; i < this.cycles[this.currentCycle].length; i++) {
-        if(this.cycles[this.currentCycle][i].chapter === this.chapter){
+      for (let i = 0; i < this.cycles[this.currentCycle].length; i++) {
+        if (this.cycles[this.currentCycle][i].chapter === this.chapter) {
           return this.cycles[this.currentCycle][i].sermon;
         }
       }
@@ -52,4 +50,7 @@ export default {
 </script>
 
 <style>
+#iframeCSS {
+  margin-top: 3%;
+}
 </style>

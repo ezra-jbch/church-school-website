@@ -1,62 +1,73 @@
 <template>
-  <div id="table-container">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <!--Columns for the table-->
-          <th style="width: 10%" scope="col">Date</th>
-          <th style="width: 10%" scope="col">Chapter</th>
-          <th style="width: 60%" scope="col">Title</th>
-          <th style="width: 10%" scope="col">PDF</th>
-          <th style="width: 10%" scope="col">Sermon</th>
-        </tr>
-      </thead>
-      <tbody style="text-align: center; vertical-align: middle">
-        <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
-        <tr
-          v-for="chapter in currentChaptersOfCycle"
-          :key="chapter"
-          :style="{ 'background-color': highlightClosestSunday(chapter.date) }"
-        >
-          <td>{{ chapter.date }}</td>
-          <td>{{ chapter.chapter }}</td>
-          <td>{{ chapter.title }}</td>
-          <td>
-            <a
-              :href="'../' + selectedYear + ' True Light/' + chapter.pdf"
-              target="_blank"
-              :class="{ disabled: chapter.pdf === '' }"
-            >
-              <!--Even though the button was disabled, the a href was not, that is why I dynamically add the disabled class.-->
-              <button
-                class="btn btn-outline-primary"
-                id="activeButtonStyle"
-                :disabled="chapter.pdf === ''"
+  <div class="alignTable">
+    <div class="table-responsive" id="table-container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!--Columns for the table-->
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 10%" scope="col">Chapter</th>
+            <th style="width: 60%" scope="col">Title</th>
+            <th style="width: 10%" scope="col">PDF</th>
+            <th style="width: 10%" scope="col">Sermon</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle">
+          <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
+          <tr
+            v-for="chapter in currentChaptersOfCycle"
+            :key="chapter"
+            :style="{
+              'background-color': highlightClosestSunday(chapter.date),
+            }"
+          >
+            <td>{{ chapter.date }}</td>
+            <td>{{ chapter.chapter }}</td>
+            <td>{{ chapter.title }}</td>
+            <td>
+              <a
+                :href="'../' + selectedYear + ' True Light/' + chapter.pdf"
+                target="_blank"
+                :class="{ disabled: chapter.pdf === '' }"
               >
-                <!--If there is no no chapter PDF linked, disable the button-->
-                <DownloadSVG />
-              </button>
-            </a>
-          </td>
-          <td>
-            <router-link
-              :to="'/sermon/?group='+groupName+'&chapter='+chapter.chapter+'&year='+selectedYear"
-              target="_blank"
-              :class="{ disabled: chapter.sermon === '' }"
-            >
-              <button
-                class="btn btn-outline-primary"
-                id="activeButtonStyle"
-                :disabled="chapter.sermon === ''"
+                <!--Even though the button was disabled, the a href was not, that is why I dynamically add the disabled class.-->
+                <button
+                  class="btn btn-outline-primary"
+                  id="activeButtonStyle"
+                  :disabled="chapter.pdf === ''"
+                >
+                  <!--If there is no no chapter PDF linked, disable the button-->
+                  <DownloadSVG />
+                </button>
+              </a>
+            </td>
+            <td>
+              <router-link
+                :to="
+                  '/sermon/?group=' +
+                  groupName +
+                  '&chapter=' +
+                  chapter.chapter +
+                  '&year=' +
+                  selectedYear
+                "
+                target="_blank"
+                :class="{ disabled: chapter.sermon === '' }"
               >
-                <!--If there is no no chapter sermon linked, disable the button-->
-                <WatchSVG />
-              </button>
-            </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <button
+                  class="btn btn-outline-primary"
+                  id="activeButtonStyle"
+                  :disabled="chapter.sermon === ''"
+                >
+                  <!--If there is no no chapter sermon linked, disable the button-->
+                  <WatchSVG />
+                </button>
+              </router-link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -99,7 +110,9 @@ export default {
     currentChaptersOfCycle() {
       /*Populate all the dates of the year (sundays) for that given cycle*/
       /*This bottom line is used to make sure it doesn't break if selectedYear is undefined*/
-      return !this.selectedYear ? [] : this.getCyclesWithDates(this.selectedYear);
+      return !this.selectedYear
+        ? []
+        : this.getCyclesWithDates(this.selectedYear);
     },
 
     cycles() {
@@ -176,6 +189,17 @@ export default {
 </script>
 
 <style>
+.alignTable {
+  padding: 0px 200px;
+}
+
+@media only screen and (max-width: 1100px) {
+  /* For mobile phones: */
+  .alignTable{
+    padding: 0px;
+  }
+}
+
 #activeButtonStyle:disabled {
   border-color: grey;
   color: grey;
