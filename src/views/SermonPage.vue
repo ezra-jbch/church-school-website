@@ -3,8 +3,8 @@
     <!--Not sure why, comments outside of this div breaks the component...-->
     <!--Youtube links must have the "embed" attribute in the url for it to work properly. You get this from the "share" button on youtube.-->
     <iframe
-      width="500"
-      height="600"
+      width="700"
+      height="700"
       loading="lazy"
       :src="getVideoURLForLessons()"
       title="YouTube video player"
@@ -16,28 +16,33 @@
 </template>
 
 <script>
-export default {
-  props: ["group", "year", "title"],
+const BASE_YEAR = 2020;
 
-  mounted() {
-    this.getVideoURLForLessons();
-  },
+export default {
+  props: ["group", "year", "chapter"],
 
   computed: {
     cycles() {
-      /*Get the json file*/
       return require("../data/" + this.group + ".json");
+    },
+
+    currentCycle() {
+      /*This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into*/
+      /*For example, 2020-cycle1, 2021-cycle2, 2022-cycle3*/
+      /*NOTE: Though we are using cycle 1,2, and 3, the index is 0,1, and 2.*/
+      return (
+        (this.year - (BASE_YEAR % this.cycles.length)) % this.cycles.length
+      );
     },
   },
 
   methods: {
     getVideoURLForLessons() {
       /*Given the group and title of the lesson, go through the json file and find the url for the video*/
-      for (let i = 0; i < this.cycles.length; i++) {
-        for (let j = 0; j < this.cycles[i].length; j++) {
-          if (this.cycles[i][j].title == this.title) {
-            return this.cycles[i][j].sermon;
-          }
+      // console.log(this.cycles[this.currentCycle]);
+      for (let i =0; i < this.cycles[this.currentCycle].length; i++) {
+        if(this.cycles[this.currentCycle][i].chapter === this.chapter){
+          return this.cycles[this.currentCycle][i].sermon;
         }
       }
     },

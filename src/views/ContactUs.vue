@@ -32,10 +32,8 @@ export default {
     };
   },
 
-  method: {
-    handleSubmit() {
-      /*Get data and submit to database*/
-    },
+  methods: {
+    
   },
 };
 </script>

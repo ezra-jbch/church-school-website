@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import ContactUs from '../views/ContactUs.vue';
 import LessonsPage from '../views/LessonsPage.vue';
-import { GROUP_TITLE_PER_ROUTE } from "../data/constants.js";
 import SermonPage from '../views/SermonPage.vue';
 
 const routes = [
@@ -29,13 +28,13 @@ const routes = [
     path: '/lessons/:group', /*Possible Routes: YG, ELEM, and KIND pages*/
     name: 'LessonsPage',
     component: LessonsPage,
-    props: route => ({nameOfGroup: route.params.group, titlesForGroup: GROUP_TITLE_PER_ROUTE, selectedYear: route.query.year})
+    props: route => ({groupName: route.params.group, selectedYear: route.query.year})
   },
   {
-    path:'/sermon/:group/:year/:title?',
+    path:'/sermon',
     name: 'SermonPage',
     component: SermonPage,
-    props: route => ({group: route.params.group, year: route.params.year, title: route.params.title})
+    props: route => ({group: route.query.group, year: route.query.year, chapter: route.query.chapter})
   },
 ]
 

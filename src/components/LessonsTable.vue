@@ -16,22 +16,22 @@
         <tr
           v-for="chapter in currentChaptersOfCycle"
           :key="chapter"
-          :style="{ 'background-color': changeColor(chapter.date) }"
+          :style="{ 'background-color': highlightClosestSunday(chapter.date) }"
         >
           <td>{{ chapter.date }}</td>
           <td>{{ chapter.chapter }}</td>
           <td>{{ chapter.title }}</td>
           <td>
             <a
-              :href="'../2021 True Light/' + chapter.pdf"
+              :href="'../' + selectedYear + ' True Light/' + chapter.pdf"
               target="_blank"
-              :class="{ disabled: chapter.pdf == '' }"
+              :class="{ disabled: chapter.pdf === '' }"
             >
               <!--Even though the button was disabled, the a href was not, that is why I dynamically add the disabled class.-->
               <button
                 class="btn btn-outline-primary"
-                id="buttonStyle"
-                :disabled="chapter.pdf == ''"
+                id="activeButtonStyle"
+                :disabled="chapter.pdf === ''"
               >
                 <!--If there is no no chapter PDF linked, disable the button-->
                 <DownloadSVG />
@@ -40,21 +40,14 @@
           </td>
           <td>
             <router-link
-              :to="{
-                name: 'SermonPage',
-                params: {
-                  group: nameOfGroup,
-                  year: selectedYear,
-                  title: chapter.title,
-                },
-              }"
+              :to="'/sermon/?group='+groupName+'&chapter='+chapter.chapter+'&year='+selectedYear"
               target="_blank"
-              :class="{ disabled: chapter.sermon == '' }"
+              :class="{ disabled: chapter.sermon === '' }"
             >
               <button
                 class="btn btn-outline-primary"
-                id="buttonStyle"
-                :disabled="chapter.sermon == ''"
+                id="activeButtonStyle"
+                :disabled="chapter.sermon === ''"
               >
                 <!--If there is no no chapter sermon linked, disable the button-->
                 <WatchSVG />
@@ -68,15 +61,14 @@
 </template>
 
 <script>
-
-const BASELINE = 2020; /*For YG and ELEM, there are multiple cycles. So, 2020 is our baseline (cycle1).*/
-import DownloadSVG from "../components/DownloadSVG.vue";
-import WatchSVG from "../components/WatchSVG.vue";
+const BASE_YEAR = 2020; /*For YG and ELEM, there are multiple cycles. So, 2020 is our BASE_YEAR (cycle1).*/
+import DownloadSVG from "./DownloadSVG.vue";
+import WatchSVG from "./WatchSVG.vue";
 
 export default {
-  /*nameOfGroup is that nameOfGroup that determines which json file you are looking at (YG,ELEM,KIND)*/
+  /*groupName is that groupName that determines which json file you are looking at (YG,ELEM,KIND)*/
   /*selectedYear is the year you want to view. Changes on dropdown click (Dropdown in YG and ELEM component)*/
-  props: ["nameOfGroup", "selectedYear"],
+  props: ["groupName", "selectedYear"],
 
   components: { DownloadSVG, WatchSVG },
 
@@ -94,13 +86,12 @@ export default {
   },
 
   computed: {
-
     currentCycle() {
-      /*This method used 2020, the baseline, and calculates what cycle any other given year will fall into*/
+      /*This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into*/
       /*For example, 2020-cycle1, 2021-cycle2, 2022-cycle3*/
       /*NOTE: Though we are using cycle 1,2, and 3, the index is 0,1, and 2.*/
       return (
-        (this.selectedYear - (BASELINE % this.cycles.length)) %
+        (this.selectedYear - (BASE_YEAR % this.cycles.length)) %
         this.cycles.length
       );
     },
@@ -108,23 +99,20 @@ export default {
     currentChaptersOfCycle() {
       /*Populate all the dates of the year (sundays) for that given cycle*/
       /*This bottom line is used to make sure it doesn't break if selectedYear is undefined*/
-      if (!this.selectedYear) {
-        return [];
-      }
-      return this.cyclesWithDates(this.selectedYear);
+      return !this.selectedYear ? [] : this.getCyclesWithDates(this.selectedYear);
     },
 
     cycles() {
       /*Get the json file*/
-      return require("../data/" + this.nameOfGroup + ".json");
+      return require("../data/" + this.groupName + ".json");
     },
   },
 
   methods: {
-    changeColor(date) {
+    highlightClosestSunday(date) {
       /*This method highlights the next closest sunday in the table*/
       if (
-        this.nextClosestSunday(
+        this.getNextSunday(
           "" + this.dropDownYear + this.currentMonth + this.currentDay
         ).replace("-", "/") == date
       ) {
@@ -132,8 +120,9 @@ export default {
       }
     },
 
-    nextClosestSunday(s) {
-      let d = new Date(
+    getNextSunday(s) {
+      /*This method returns to you the next closest sunday*/
+      const d = new Date(
         s.substring(0, 4),
         s.substring(4, 6) - 1,
         s.substring(6)
@@ -145,17 +134,18 @@ export default {
     setCurrentMonthAndDay() {
       /*Used to calculate the current month and day for this year*/
       /*This data is later used to determine all the chapters that have passed (been used) for the present year*/
-      const temp = new Date()
-        .toISOString()
-        .slice(0, 10); /*Returns date in 2021-08-10 format*/
-      let monthAndDaytemp = temp
-        .toString()
-        .substring(5, temp.length); /*substring to get month and day only*/
-      this.currentMonth = monthAndDaytemp.substring(0, 2);
-      this.currentDay = monthAndDaytemp.substring(3, monthAndDaytemp.length);
+      const currentDate = new Date();
+      this.currentMonth = currentDate.getMonth().toString();
+      if (parseInt(this.currentMonth) < 10) {
+        this.currentMonth = "0" + (currentDate.getMonth() + 1).toString();
+      }
+      this.currentDay = currentDate.getDate().toString();
+      if (parseInt(this.currentDay) < 10) {
+        this.currentDay = "0" + currentDate.getDate().toString();
+      }
     },
 
-    cyclesWithDates(year) {
+    getCyclesWithDates(year) {
       /*This method, for a given year, will create a temp array that stores all the sundays for that given year.*/
       /*Once that temp array is populated, it is used to fill our json data with the correct dates*/
       /*TO-DO: Figure out what to do for years with 53 chapters.*/
@@ -172,22 +162,21 @@ export default {
       while (date.getDay() != 0) {
         date.setDate(date.getDate() + 1);
       }
-      const days = [];
+      const sundays = [];
       while (date.getFullYear() == year) {
-        let m = date.getMonth() + 1;
-        let d = date.getDate();
-        days.push((m < 10 ? "0" + m : m) + "/" + (d < 10 ? "0" + d : d));
+        const m = date.getMonth() + 1;
+        const d = date.getDate();
+        sundays.push((m < 10 ? "0" + m : m) + "/" + (d < 10 ? "0" + d : d));
         date.setDate(date.getDate() + 7);
       }
-      return days; /*Array of sundays for the year*/
+      return sundays; /*Array of sundays for the year*/
     },
   },
 };
 </script>
 
 <style>
-
-#buttonStyle:disabled {
+#activeButtonStyle:disabled {
   border-color: grey;
   color: grey;
 }
@@ -205,12 +194,12 @@ a.disabled {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
-#buttonStyle {
+#activeButtonStyle {
   border-color: #005595;
   color: #005595;
 }
 
-#buttonStyle:hover {
+#activeButtonStyle:hover {
   background-color: #005595;
   color: white;
 }

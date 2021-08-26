@@ -1,11 +1,7 @@
 <template>
-  <div class="background-img">
+  <div v-if="loggedIn" class="background-img">
     <Header />
-    <div class="d-flex justify-content-start">
-      <div id="navBar">
-        <Dropdown :itemsInDropdown="routesForLessonPages" :dropDownTitle="lessonTitleForDropdown"/>
-      </div>
-    </div>
+    <Navbar :items="routesForLessonPages" />
     <div class="container">
       <div class="row">
         <router-view v-slot="{ Component, route }">
@@ -13,46 +9,64 @@
           <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
           <!--Documentation: https://next.router.vuejs.org/guide/advanced/transitions.html-->
           <transition name="route" mode="out-in">
-            <component :is="Component" :key="route.path"/>
+            <component :is="Component" :key="route.path" />
           </transition>
         </router-view>
       </div>
     </div>
     <br /><Footer />
   </div>
+  <div class="passwordForm" v-else>
+    <form @submit.prevent="handleSubmit">
+      <label>Enter Password:</label>
+      <input type="password" required v-model="password" />
+    </form>
+  </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import Dropdown from "./components/Dropdown.vue";
+import Navbar from "./components/Navbar.vue";
 import { GROUP_TITLE_PER_ROUTE } from "./data/constants.js"; /*Constant file with names and paths for dropdown*/
 
 export default {
-  components: { Header, Footer, Dropdown },
+  components: { Header, Footer, Navbar },
 
   data() {
     return {
+      password: "",
+      correctPassword: "jbch0691",
+      loggedIn: false,
       /*routesForLessonPages is used to transition between pages*/
       routesForLessonPages: [],
-      lessonTitleForDropdown: "Lessons", /*To make dropdown more reusable, pass in title as prop that will allow for different titles.*/
     };
   },
 
   mounted() {
-    this.setroutesForLessonPages();
+    this.routesForLessonPages = this.getRoutesForLessonPages(
+      GROUP_TITLE_PER_ROUTE
+    );
   },
 
   methods: {
-    setroutesForLessonPages() {
+    handleSubmit() {
+      if (this.password === this.correctPassword) {
+        this.loggedIn = true;
+      }
+    },
+
+    getRoutesForLessonPages(titlesForGroups) {
       /*Populating routesForLessonPages with page titles and routes. routesForLessonPages is sent as a prop to Dropdown component*/
       /*This behavior of ordering for the array isn't guaranteed*/
-      for (const x in GROUP_TITLE_PER_ROUTE) {
-        this.routesForLessonPages.push({
-          page: GROUP_TITLE_PER_ROUTE[x],
+      const temp = [];
+      for (const x in titlesForGroups) {
+        temp.push({
+          page: titlesForGroups[x],
           route: "/lessons/" + x + "?year=" + new Date().getFullYear(),
         });
       }
+      return temp;
     },
   },
 };
@@ -75,12 +89,29 @@ body {
   overflow-x: clip; /*Need this to prevent overflow. Did not use 'overflow-x: hidden' because it breaks dropdown*/
 }
 
+.passwordForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+form {
+  width: 50%;
+  margin: 30px auto;
+  background: white;
+  text-align: left;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 /*route transitions = page transitions*/
@@ -108,5 +139,14 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
