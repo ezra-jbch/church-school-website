@@ -3,7 +3,8 @@
     <!--Not sure why, comments outside of this div breaks the component...-->
     <!--Youtube links must have the "embed" attribute in the url for it to work properly. You get this from the "share" button on youtube.-->
     <iframe
-      width="700"
+      style="margin-top: 1%"
+      width="1000"
       height="700"
       loading="lazy"
       :src="getVideoURLForLessons()"

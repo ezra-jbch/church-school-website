@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loggedIn" class="background-img">
+  <div v-if="loggedIn" class="background-img"> <!--If password is not entered, hide content-->
     <Header />
     <Navbar :items="routesForLessonPages" />
     <div class="container">
@@ -16,10 +16,11 @@
     </div>
     <br /><Footer />
   </div>
-  <div class="passwordForm" v-else>
+  <div class="passwordForm" v-else> <!--If password is not entered, enter password first-->
     <form @submit.prevent="handleSubmit">
       <label>Enter Password:</label>
       <input type="password" required v-model="password" />
+      <p style="color: red">{{ wrongPassword }}</p> <!--Show warning if wrong password is entered-->
     </form>
   </div>
 </template>
@@ -35,9 +36,10 @@ export default {
 
   data() {
     return {
-      password: "",
-      correctPassword: "jbch0691",
-      loggedIn: false,
+      wrongPassword: "", /*This is later filled to say "Incorrect password, please try again" when user enters wrong password*/
+      password: "", /*Password entered by the user*/
+      correctPassword: "jbch0691", /*Hardcoded password*/
+      loggedIn: false, /*Check if user loggedIn or not*/
       /*routesForLessonPages is used to transition between pages*/
       routesForLessonPages: [],
     };
@@ -47,12 +49,19 @@ export default {
     this.routesForLessonPages = this.getRoutesForLessonPages(
       GROUP_TITLE_PER_ROUTE
     );
+    /*https://vuejs.org/v2/cookbook/client-side-storage.html*/
+    /*Client side local storage. Save cookies so user only has to log in once*/
+    if(localStorage.loggedIn){ 
+      this.loggedIn = localStorage.loggedIn;
+    }
   },
-
   methods: {
     handleSubmit() {
       if (this.password === this.correctPassword) {
-        this.loggedIn = true;
+        localStorage.loggedIn = true; /*If they put in the right password, save it in local storage*/
+        this.loggedIn = localStorage.loggedIn;        
+      } else {
+        this.wrongPassword = "Incorrect password, please try again";
       }
     },
 

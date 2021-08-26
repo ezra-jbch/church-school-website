@@ -50,7 +50,6 @@
 export default {
   props: [
     "items",
-    "title",
   ] /*items is an array of items that the routes can transition to*/,
 };
 </script>
