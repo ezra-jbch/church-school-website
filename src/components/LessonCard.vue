@@ -1,11 +1,20 @@
 <template>
   <div class="lesson-card sans-font">
+
+    <!-- Card Background Image -->
     <img class="lesson-card-img" :src="require('../assets/' + groupRoute + '.png')" :alt="groupRoute" />
+
+    <!-- Chapter Name -->
     <div class="card-title">
       {{ chapterInfo.title === "" ? '- Unavailable -' : chapterInfo.title }}
     </div>
+
+    <!-- Container for Placing Buttons  -->
     <div class="button-strip row m-0 justify-content-evenly">
+
+      <!-- PDF Button -->
       <div class="fill-button col-auto p-0">
+        <!-- TODO: Make sure to change ' True Light/' once the folder name changes so that it works across all groups -->
         <a
           :href="'../' + yearNextSunday + ' True Light/' + chapterInfo.pdf"
           target="_blank"
@@ -17,11 +26,13 @@
             id="activeButtonStyle"
             :disabled="chapterInfo.pdf === ''"
           >
-            <!--If there is no no chapter PDF linked, disable the button-->
+            <!--If there is no chapter PDF linked, disable the button-->
             <DownloadSVG />
           </button>
         </a>
       </div>
+
+      <!-- YouTube Button -->
       <div class="fill-button col-auto p-0">
         <router-link
           :to="
@@ -45,91 +56,104 @@
           </button>
         </router-link>
       </div>
+
     </div>
+
+    <!-- Group Name -->
     <div class="card-label">
       {{ groupTitle }}
     </div>
+
   </div>
 </template>
 
 <script>
-  import { getNextSunday, getChapterNum } from '../lib/chronometry.js'
-  import { BASE_YEAR, GROUP_TITLE_PER_ROUTE } from '../data/constants.js' /*Constant file with names and paths for dropdown*/
-  import DownloadSVG from './DownloadSVG.vue'
+  import { getNextSunday, getChapterNum } from '../lib/chronometry.js';
+  import { BASE_YEAR, GROUP_TITLE_PER_ROUTE } from '../data/constants.js';
+  import DownloadSVG from './DownloadSVG.vue';
   import WatchSVG from "./WatchSVG.vue";
 
   export default {
     components: { DownloadSVG, WatchSVG },
 
     props: {
-      // groupRoute is the groupRoute that determines which json file you are looking at ("kindergarten", "elementary", "youth-group")
+      // groupRoute determines which json file you are looking at ("kindergarten", "elementary", "youth-group")
       groupRoute: {
         type: String,
         required: true,
         validator(value) {
           // checks to see if the prop matches "kindergarten", "elementary", or "youth-group"
-          return Object.keys(GROUP_TITLE_PER_ROUTE).includes(value)
-        }
+          return Object.keys(GROUP_TITLE_PER_ROUTE).includes(value);
+        },
       },
+
       // isDateMode specifies which mode (props) you want to use to choose the chapters you want to display in the card
       // true: date formatted; false: cycle & chapter formatted
       isDateMode: {
         type: Boolean,
-        default: false
+        default: false,
       },
+
       // used only when isDateMode === false; specifies which cycle to use when displaying a chapter of lesson (ZERO-indexed)
       cycle: {
         type: Number,
-        default: 0
+        default: 0,
       },
+
       // used only when isDateMode === false; specifies which chapter to display within the given cycle (ONE-indexed)
       chapter: {
         type: Number,
-        default: 1
+        default: 1,
       },
+
       // used only when isDateMode === true; given the date (default current Date), it automatically finds the upcoming cycle & chapter to use when displaying a lesson
       date: {
         type: Date,
-        default: new Date()
+        default: new Date(),
       },
     },
 
     computed: {
       groupTitle() {
-        return GROUP_TITLE_PER_ROUTE[this.groupRoute]
+        return GROUP_TITLE_PER_ROUTE[this.groupRoute];
       },
+
+      // calculate the cycle based on given date if isDateMode is true, otherwise use provided cycle
       displayCycle() {
-        // calculate the cycle based on given date if isDateMode is true, otherwise use provided cycle
         if (this.isDateMode) {
-          /*This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into*/
-          /*For example, 2020-cycle1, 2021-cycle2, 2022-cycle3*/
-          /*NOTE: Though we are using cycle 1,2, and 3, the index is 0,1, and 2.*/
-          return (this.yearNextSunday - (BASE_YEAR % this.cycles.length)) % this.cycles.length
+          // This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into
+          // For example, 2020: cycle === 0; 2021: cycle === 1; 2022: cycle === 2
+          return (this.yearNextSunday - (BASE_YEAR % this.cycles.length)) % this.cycles.length;
         }
-        return this.cycle
+        return this.cycle;
       },
+
+      // calculate the chapter based on given date if isDateMode is true, otherwise use provided chapter
       displayChapter() {
-        // calculate the chapter based on given date if isDateMode is true, otherwise use provided chapter
         if (this.isDateMode) {
-          return getChapterNum(this.date)
+          return getChapterNum(this.date);
         }
-        return this.chapter
+        return this.chapter;
       },
+
+      // get the json file
       cycles() {
-        /*Get the json file*/
         return require('../data/' + this.groupRoute + '.json');
       },
+
+      // return object corresponding to the chapter of interest within json
       chapterInfo() {
-        // object corresponding to the chapter of interest within json
-        return this.cycles[this.displayCycle][this.displayChapter - 1]
+        return this.cycles[this.displayCycle][this.displayChapter - 1];
       },
+
+      // get the year of next Sunday
       yearNextSunday() {
-        // in case the given date is toward the end of the year, the following Sunday may in the year after the given date
-        const upcomingSunday = getNextSunday(this.date)
-        return upcomingSunday.getFullYear()
+        // in case the given date is toward the end of the year, the following Sunday may be in the year after the given date
+        const upcomingSunday = getNextSunday(this.date);
+        return upcomingSunday.getFullYear();
       },
     },
-  }
+  };
 </script>
 
 <style>
