@@ -47,23 +47,27 @@
 </template>
 
 <script>
+
 export default {
-  props: [
-    "items",
-  ] /*items is an array of items that the routes can transition to*/,
+  props: ["items"] /*items is an array of items that the routes can transition to*/,
 };
+
 </script>
 
 <style>
+
 #dropdownActive:active {
   background-color: #005595;
 }
+
 #navbarNavDropdown {
   margin-left: 1%;
 }
+
 #lessonDropdownOptions {
   animation: fadeIn 0.5s ease;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
