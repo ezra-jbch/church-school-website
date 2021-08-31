@@ -29,17 +29,11 @@ export function getSundaysByYear(year) {
 // function returning a number corresponding to the chapter for the upcoming Sunday of a given date
 export function getChapterNum(d) {
 
-  // get the year of the upcoming Sunday of the given date 
+  // get the all Sundays in the year of the upcoming Sunday of the given date 
   const upcomingSunday = getNextSunday(d);
   const sundaysOfYear = getSundaysByYear(upcomingSunday.getFullYear());
-
-  // check which number Sunday it is against the list of all Sundays that year
-  for (let i = 0; i < sundaysOfYear.length; i++) {
-    // use .getTime when comparing dates
-    if (sundaysOfYear[i].getTime() === upcomingSunday.getTime()) {
-      return i + 1; // chapters start with 1 not 0
-    }
-  }
-
-  return -1; // error: chapter number not found
+  
+  // get the index of the matching Sunday (using .getTime()) in all Sundays that year and add by one to get the chapter
+  // returns 0 if not found (error)
+  return sundaysOfYear.findIndex(sunday => sunday.getTime() === upcomingSunday.getTime()) + 1;
 };

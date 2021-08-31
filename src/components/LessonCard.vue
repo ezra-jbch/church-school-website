@@ -104,6 +104,10 @@
       chapter: {
         type: Number,
         default: 1,
+        validator(value) {
+          // check to see if the chapter number makes sense (between 1 and 53 inclusive)
+          return 0 < value && value < 54;
+        },
       },
 
       // used only when isDateMode === true; given the date (default current Date), it automatically finds the upcoming cycle & chapter to use when displaying a lesson
