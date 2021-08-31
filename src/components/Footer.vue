@@ -30,6 +30,7 @@ export default {
         /* giving appropriate padding to the copyright */
         padding: 12px 12px 12px 27px;
         display: flex;
+        position: fixed;
     }
     .footer-text {
         color: #808080;

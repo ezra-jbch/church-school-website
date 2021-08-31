@@ -1,20 +1,23 @@
 <template>
-  <div v-if="loggedIn" class="background-img"> <!--If password is not entered, hide content-->
-    <Header />
-    <Navbar :items="routesForLessonPages" />
-    <div class="container">
-      <div class="row">
-        <router-view v-slot="{ Component, route }">
-          <!--This is how you do transitions between routes in Vue 3-->
-          <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
-          <!--Documentation: https://next.router.vuejs.org/guide/advanced/transitions.html-->
-          <transition name="route" mode="out-in">
-            <component :is="Component" :key="route.path" />
-          </transition>
-        </router-view>
+  <div v-if="loggedIn"> <!--If password is not entered, hide content-->
+    <div class="background-img">
+      <Header />
+      <Navbar :items="routesForLessonPages" />
+      <div class="container">
+        <div class="row">
+          <router-view v-slot="{ Component, route }">
+            <!--This is how you do transitions between routes in Vue 3-->
+            <!--Waring: If you want to use this, for any component you transition too, all child elements must be wrapped in one root element-->
+            <!--Documentation: https://next.router.vuejs.org/guide/advanced/transitions.html-->
+            <transition name="route" mode="out-in">
+              <component :is="Component" :key="route.path" />
+            </transition>
+          </router-view>
+        </div>
       </div>
+      <br />
     </div>
-    <br /><Footer />
+    <Footer />
   </div>
   <div class="passwordForm" v-else> <!--If password is not entered, enter password first-->
     <form @submit.prevent="handleSubmit">
@@ -149,6 +152,7 @@ form {
   background-repeat: no-repeat;
   background-size: cover;
   animation: fadeIn 0.5s ease;
+  min-height: 100vh;
 }
 @keyframes fadeIn {
   from {

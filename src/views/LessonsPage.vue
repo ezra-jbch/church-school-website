@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 35px;">
+  <div style="margin-top: 35px; margin-bottom: 85px;">
     <!--Check global css file in assets folder for lesson-table-padding-->
     <div class="alignButtonAndTitle">
       <!--Used to align button and title-->
