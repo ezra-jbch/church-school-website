@@ -1,4 +1,4 @@
-
+export const BASE_YEAR = 2020; // For YG and ELEM, there are multiple cycles. So, 2020 is our BASE_YEAR (cycle === 0).
 export const YOUTH_GROUP_TITLE = "Youth Group";
 export const YOUTH_GROUP_ROUTE = "youth-group";
 export const ELEMENTARY_TITLE = "Elementary";
