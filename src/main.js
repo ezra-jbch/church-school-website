@@ -8,8 +8,6 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
-import './assets/main/main.css';
-
 // Vue SPA (single page application)
 const app = createApp(App)
 

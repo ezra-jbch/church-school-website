@@ -1,9 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import ContactUs from '../views/ContactUs.vue'
-import YouthGroup from '../views/YouthGroup.vue'
-import Elementary from '../views/Elementary.vue'
-import Kindergarten from '../views/Kindergarten.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import ContactUs from '../views/ContactUs.vue';
+import LessonsPage from '../views/LessonsPage.vue';
+import SermonPage from '../views/SermonPage.vue';
 
 const routes = [
   {
@@ -25,20 +24,18 @@ const routes = [
     component: ContactUs
   },
   {
-    path: '/Youth-Group',
-    name: 'YouthGroup',
-    component: YouthGroup
+    /*Dynamic file path. Look at Dropdown Component to see how route is dynamically being passed in*/
+    path: '/lessons/:group', /*Possible Routes: YG, ELEM, and KIND pages*/
+    name: 'LessonsPage',
+    component: LessonsPage,
+    props: route => ({groupName: route.params.group, selectedYear: route.query.year})
   },
   {
-    path: '/Elementary',
-    name: 'Elementary',
-    component: Elementary
+    path:'/sermon',
+    name: 'SermonPage',
+    component: SermonPage,
+    props: route => ({group: route.query.group, year: route.query.year, chapter: route.query.chapter})
   },
-  {
-    path: '/Kindergarten',
-    name: 'Kindergarten',
-    component: Kindergarten
-  }
 ]
 
 const router = createRouter({

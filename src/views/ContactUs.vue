@@ -23,6 +23,7 @@
 
 <script>
 export default {
+
   data() {
     return {
       name: "",
@@ -30,15 +31,15 @@ export default {
       message: "",
     };
   },
-  method: {
-    handleSubmit(){
-      /*Get data and submit to database*/
-    }
+
+  methods: {
+    /*Need methods to actually handle submitting the form*/
   },
 };
 </script>
 
 <style>
+
 form {
   width: 50%;
   margin: 30px auto;
@@ -48,6 +49,7 @@ form {
   border-radius: 10px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+
 label {
   color: black;
   display: inline-block;
@@ -57,6 +59,7 @@ label {
   letter-spacing: 1px;
   font-weight: bold;
 }
+
 input {
   display: block;
   padding: 10px 6px;
@@ -66,15 +69,17 @@ input {
   border-bottom: 1px solid #ddd;
   color: black;
 }
+
 .submitBtn {
   background: #0b6dff;
-  border:0;
+  border: 0;
   padding: 10px 20px;
   margin-top: 20px;
   color: white;
   border-radius: 20px;
 }
-.submit{
+
+.submit {
   text-align: center;
 }
 </style>
