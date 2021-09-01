@@ -1,10 +1,13 @@
 <template>
-    <div class="footer">
-        <!-- Copyright -->
-        <p class="footer-text left">Jesus Baptist U.S.A. Conference © {{ currentYear }} All rights reserved</p>
-        <!-- Contact Us page -->
-        <router-link class="footer-text knob" :to="{ name: 'ContactUs' }">Contact Us</router-link>
-    </div>
+  <div class="footer">
+
+    <!-- Copyright -->
+    <p class="footer-text left">Jesus Baptist U.S.A. Conference © {{ currentYear }} All rights reserved</p>
+
+    <!-- Contact Us Page Button -->
+    <router-link class="footer-text knob" :to="{ name: 'ContactUs' }">Contact Us</router-link>
+
+  </div>
 </template>
 
 <script>
@@ -17,6 +20,30 @@ export default {
     },
   },
 
+  mounted() {
+    // when footer is mounted, add listener that triggers the footerPositioning method whenever the window size changes
+    window.addEventListener("resize", this.footerPositioning);
+
+    // call footerPositioning once to position footer properly from the beggining
+    this.footerPositioning();
+  },
+
+  unmounted() {
+    // remove the listener when unmounted to save performance
+    window.removeEventListener("resize", this.footerPositioning);
+  },
+
+  methods: {
+    // this method helps remove the whitespace below the footer when there aren't enough contents on the page while 
+    // dynamically adjusting the height of everything above the footer so that there is no unnessary extra space making the scrollbar to appear
+    footerPositioning() {
+      // get the current height of the footer and format it in pixels
+      const footerHeightPx = document.getElementById('footer').clientHeight + 'px';
+
+      // pass the footer height information to container element above the footer
+      document.getElementById('above-footer').style.setProperty('--footer-height', footerHeightPx);
+    },
+  },
 };
 </script>
 
