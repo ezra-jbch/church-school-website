@@ -14,51 +14,22 @@
         </thead>
         <tbody style="text-align: center; vertical-align: middle">
           <!--Looping through each chapter in a specific cycle (cycle1, cycle2, etc) and displaying it on table-->
-          <tr
-            v-for="chapter in currentChaptersOfCycle"
-            :key="chapter"
-            :style="{
-              'background-color': highlightClosestSunday(chapter.date),
-            }"
-          >
+          <tr v-for="chapter in currentChaptersOfCycle" :key="chapter" :style="{'background-color': highlightClosestSunday(chapter.date)}">
             <td>{{ chapter.date }}</td>
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
             <td>
-              <a
-                :href="'../' + selectedYear + ' True Light/' + chapter.pdf"
-                target="_blank"
-                :class="{ disabled: chapter.pdf === '' }"
-              >
+              <a :href="'../' + groupName +'/'+ 'cycles/cycle-' + (currentCycle+1) +'/'+ chapter.pdf" target="_blank" :class="{ disabled: chapter.pdf === '' }">
                 <!--Even though the button was disabled, the a href was not, that is why I dynamically add the disabled class.-->
-                <button
-                  class="btn btn-outline-primary"
-                  id="activeButtonStyle"
-                  :disabled="chapter.pdf === ''"
-                >
+                <button class="btn btn-outline-primary" id="activeButtonStyle" :disabled="chapter.pdf === ''">
                   <!--If there is no no chapter PDF linked, disable the button-->
                   <DownloadSVG />
                 </button>
               </a>
             </td>
             <td>
-              <router-link
-                :to="
-                  '/sermon/?group=' +
-                  groupName +
-                  '&chapter=' +
-                  chapter.chapter +
-                  '&year=' +
-                  selectedYear
-                "
-                target="_blank"
-                :class="{ disabled: chapter.sermon === '' }"
-              >
-                <button
-                  class="btn btn-outline-primary"
-                  id="activeButtonStyle"
-                  :disabled="chapter.sermon === ''"
-                >
+              <router-link :to="'/sermon/?group=' + groupName + '&chapter=' + chapter.chapter + '&year=' + selectedYear" target="_blank" :class="{ disabled: chapter.sermon === '' }">
+                <button class="btn btn-outline-primary" id="activeButtonStyle" :disabled="chapter.sermon === ''">
                   <!--If there is no no chapter sermon linked, disable the button-->
                   <WatchSVG />
                 </button>
@@ -86,14 +57,9 @@ export default {
   data() {
     return {
       dropDownYear: new Date().getFullYear(),
-      changeYear: 0,
-      currentMonth: 0,
-      currentDay: 0,
+      currentMonth: new Date().getMonth(),
+      currentDay: new Date().getDate(),
     };
-  },
-
-  mounted() {
-    this.setCurrentMonthAndDay();
   },
 
   computed: {
@@ -101,18 +67,13 @@ export default {
       /*This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into*/
       /*For example, 2020-cycle1, 2021-cycle2, 2022-cycle3*/
       /*NOTE: Though we are using cycle 1,2, and 3, the index is 0,1, and 2.*/
-      return (
-        (this.selectedYear - (BASE_YEAR % this.cycles.length)) %
-        this.cycles.length
-      );
+      return ((this.selectedYear - (BASE_YEAR % this.cycles.length)) % this.cycles.length);
     },
 
     currentChaptersOfCycle() {
       /*Populate all the dates of the year (sundays) for that given cycle*/
       /*This bottom line is used to make sure it doesn't break if selectedYear is undefined*/
-      return !this.selectedYear
-        ? []
-        : this.getCyclesWithDates(this.selectedYear);
+      return !this.selectedYear ? [] : this.getCyclesWithDates(this.selectedYear);
     },
 
     cycles() {
@@ -122,40 +83,19 @@ export default {
   },
 
   methods: {
+
     highlightClosestSunday(date) {
       /*This method highlights the next closest sunday in the table*/
-      if (
-        this.getNextSunday(
-          "" + this.dropDownYear + this.currentMonth + this.currentDay
-        ).replace("-", "/") == date
-      ) {
+      if (this.getNextSunday(this.dropDownYear,this.currentMonth,this.currentDay).replace("-", "/") == date) {
         return "#afdefe";
       }
     },
 
-    getNextSunday(s) {
+    getNextSunday(year, month, day) {
       /*This method returns to you the next closest sunday*/
-      const d = new Date(
-        s.substring(0, 4),
-        s.substring(4, 6) - 1,
-        s.substring(6)
-      );
+      const d = new Date(year,month,day);
       d.setDate(d.getDate() - d.getDay() + 7);
       return d.toISOString().slice(5, 10);
-    },
-
-    setCurrentMonthAndDay() {
-      /*Used to calculate the current month and day for this year*/
-      /*This data is later used to determine all the chapters that have passed (been used) for the present year*/
-      const currentDate = new Date();
-      this.currentMonth = currentDate.getMonth().toString();
-      if (parseInt(this.currentMonth) < 10) {
-        this.currentMonth = "0" + (currentDate.getMonth() + 1).toString();
-      }
-      this.currentDay = currentDate.getDate().toString();
-      if (parseInt(this.currentDay) < 10) {
-        this.currentDay = "0" + currentDate.getDate().toString();
-      }
     },
 
     getCyclesWithDates(year) {

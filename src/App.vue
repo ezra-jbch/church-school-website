@@ -45,18 +45,16 @@ export default {
       password: "", /*Password entered by the user*/
       correctPassword: "jbch0691", /*Hardcoded password*/
       loggedIn: false, /*Check if user loggedIn or not*/
-      /*routesForLessonPages is used to transition between pages*/
-      routesForLessonPages: [],
+      routesForLessonPages: [], /*routesForLessonPages is used to transition between pages*/
     };
   },
 
   mounted() {
-    this.routesForLessonPages = this.getRoutesForLessonPages(
-      GROUP_TITLE_PER_ROUTE
-    );
+    this.routesForLessonPages = this.getRoutesForLessonPages(GROUP_TITLE_PER_ROUTE);
+
     /*https://vuejs.org/v2/cookbook/client-side-storage.html*/
     /*Client side local storage. Save cookies so user only has to log in once*/
-    if(localStorage.loggedIn){ 
+    if(localStorage.loggedIn){
       this.loggedIn = localStorage.loggedIn;
     }
   },
@@ -75,10 +73,7 @@ export default {
       /*This behavior of ordering for the array isn't guaranteed*/
       const temp = [];
       for (const x in titlesForGroups) {
-        temp.push({
-          page: titlesForGroups[x],
-          route: "/lessons/" + x + "?year=" + new Date().getFullYear(),
-        });
+        temp.push({page: titlesForGroups[x], route: "/lessons/" + x + "?year=" + new Date().getFullYear()});
       }
       return temp;
     },
@@ -110,6 +105,7 @@ body {
   text-align: center;
   min-height: 100vh;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
