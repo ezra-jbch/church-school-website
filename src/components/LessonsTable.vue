@@ -19,7 +19,7 @@
             <td>{{ chapter.chapter }}</td>
             <td>{{ chapter.title }}</td>
             <td>
-              <a :href="'../' + selectedYear + ' True Light/' + chapter.pdf" target="_blank" :class="{ disabled: chapter.pdf === '' }">
+              <a :href="'../' + groupName +'/'+ 'cycles/cycle-' + (currentCycle+1) +'/'+ chapter.pdf" target="_blank" :class="{ disabled: chapter.pdf === '' }">
                 <!--Even though the button was disabled, the a href was not, that is why I dynamically add the disabled class.-->
                 <button class="btn btn-outline-primary" id="activeButtonStyle" :disabled="chapter.pdf === ''">
                   <!--If there is no no chapter PDF linked, disable the button-->
