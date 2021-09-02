@@ -24,7 +24,7 @@ export default {
     // when footer is mounted, add listener that triggers the footerPositioning method whenever the window size changes
     window.addEventListener("resize", this.footerPositioning);
 
-    // call footerPositioning once to position footer properly from the beggining
+    // call footerPositioning once to position footer properly from the beginning
     this.footerPositioning();
   },
 

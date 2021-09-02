@@ -16,7 +16,7 @@
       <div class="fill-button col-auto p-0">
         <!-- TODO: Make sure to change ' True Light/' once the folder name changes so that it works across all groups -->
         <a
-          :href="'../' + yearNextSunday + ' True Light/' + chapterInfo.pdf"
+          :href="'../' + groupRoute + '/cycles/cycle-' + displayCycle + '/' + chapterInfo.pdf"
           target="_blank"
           :class="{ disabled: chapterInfo.pdf === '' }"
         >
@@ -94,7 +94,7 @@
         default: false,
       },
 
-      // used only when isDateMode === false; specifies which cycle to use when displaying a chapter of lesson (ZERO-indexed)
+      // used only when isDateMode === false; specifies which cycle to use when displaying a chapter of lesson (ONE-indexed)
       cycle: {
         type: Number,
         default: 0,
@@ -126,8 +126,8 @@
       displayCycle() {
         if (this.isDateMode) {
           // This method used 2020, the BASE_YEAR, and calculates what cycle any other given year will fall into
-          // For example, 2020: cycle === 0; 2021: cycle === 1; 2022: cycle === 2
-          return (this.yearNextSunday - (BASE_YEAR % this.cycles.length)) % this.cycles.length;
+          // For example, 2020: cycle === 1; 2021: cycle === 2; 2022: cycle === 3
+          return (this.yearNextSunday - (BASE_YEAR % this.cycles.length)) % this.cycles.length + 1;
         }
         return this.cycle;
       },
@@ -147,7 +147,7 @@
 
       // return object corresponding to the chapter of interest within json
       chapterInfo() {
-        return this.cycles[this.displayCycle][this.displayChapter - 1];
+        return this.cycles[this.displayCycle - 1][this.displayChapter - 1];
       },
 
       // get the year of next Sunday
